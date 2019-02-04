@@ -1,4 +1,8 @@
 <nav>
+  <div *ngIf="user$ | async as user">
+    <img *ngIf="user.images[0]?.url" [src]="user.images[0]?.url">
+    <span>{{user.display_name}}</span>
+  </div>
   <p><a routerLink="/">Home</a></p>
   <p><a routerLink="/artist">Artist</a></p>
   <p><button (click)="logOut()">Log Out</button></p>
