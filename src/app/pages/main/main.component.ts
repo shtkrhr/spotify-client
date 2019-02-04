@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'sp-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+  selector: 'sp-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss'],
 })
-export class IndexComponent implements OnInit {
+export class MainComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router) { }
 
