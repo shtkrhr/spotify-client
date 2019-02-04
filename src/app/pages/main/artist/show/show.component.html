@@ -1,0 +1,14 @@
+<ng-container *ngIf="data | async as d">
+  <img [src]="d.artist.images[0].url" style="max-width: 300px; max-height: 300px">
+  <h1>{{d.artist.name}}</h1>
+  <p>{{d.artist.followers.total | number}} followers</p>
+
+  <ul>
+    <li *ngFor="let related of d.relateds">
+      <a [routerLink]="['/artist', related.id]">
+        <img [src]="related.images[0].url" style="width: 100px">
+        {{related.name}}
+      </a>
+    </li>
+  </ul>
+</ng-container>
