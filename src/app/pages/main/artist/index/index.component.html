@@ -5,7 +5,7 @@
   <ul>
     <li *ngFor="let artist of d.artists">
       <a [routerLink]="['/artist', artist.id]">
-        <img [src]="artist.images[0].url" style="width: 100px">
+        <img *ngIf="artist.images[0]?.url" [src]="artist.images[0].url" style="width: 100px">
         {{artist.name}}
       </a>
     </li>
