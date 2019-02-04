@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { ShowResolvedData } from './show.resolver';
+import { IndexResolvedData } from './index.resolver';
 
 @Component({
-  selector: 'sp-show',
-  templateUrl: './show.component.html',
-  styleUrls: ['./show.component.scss'],
+  selector: 'sp-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.scss'],
 })
-export class ShowComponent implements OnInit {
+export class IndexComponent implements OnInit {
 
-  readonly data = new ReplaySubject<ShowResolvedData>(1);
+  readonly data = new ReplaySubject<IndexResolvedData>(1);
 
   constructor(private route: ActivatedRoute) { }
 

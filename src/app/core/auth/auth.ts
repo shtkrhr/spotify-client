@@ -7,6 +7,7 @@ export const authEndpoint = () => {
     client_id: env.clientId,
     response_type: 'token',
     redirect_uri: `${location.origin}/auth/callback/`,
+    scope: 'user-follow-read',
   };
 
   const paramsString = Object.keys(params)
