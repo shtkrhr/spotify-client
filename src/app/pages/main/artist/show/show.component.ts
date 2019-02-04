@@ -10,13 +10,13 @@ import { ShowResolvedData } from './show.resolver';
 })
 export class ShowComponent implements OnInit {
 
-  readonly data = new ReplaySubject<ShowResolvedData>(1);
+  readonly data$ = new ReplaySubject<ShowResolvedData>(1);
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.data.next(data.data);
+      this.data$.next(data.data);
     });
   }
 

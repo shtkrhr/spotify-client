@@ -10,13 +10,13 @@ import { IndexResolvedData } from './index.resolver';
 })
 export class IndexComponent implements OnInit {
 
-  readonly data = new ReplaySubject<IndexResolvedData>(1);
+  readonly data$ = new ReplaySubject<IndexResolvedData>(1);
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.data.next(data.data);
+      this.data$.next(data.data);
     });
   }
 
