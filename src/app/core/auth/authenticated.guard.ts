@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { getAccessToken } from './auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticatedGuard implements CanLoad {
 
-  constructor(private router: Router, private auth: AuthService) {}
+  constructor(private router: Router) {}
 
   canLoad() {
-    if (this.auth.getToken()) {
+    if (getAccessToken()) {
       return true;
     }
 

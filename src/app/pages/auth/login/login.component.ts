@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/auth/auth.service';
+import { authEndpoint } from '../../../core/auth/auth';
 
 @Component({
   selector: 'sp-login',
@@ -8,11 +8,7 @@ import { AuthService } from '../../../core/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  authEndpoint: string;
-
-  constructor(auth: AuthService) {
-    this.authEndpoint = auth.authEndpoint();
-  }
+  authEndpoint = authEndpoint();
 
   ngOnInit() {
   }

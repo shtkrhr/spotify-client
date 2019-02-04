@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/auth/auth.service';
+import { clearAccessToken } from '../../core/auth/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,13 +9,13 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   logOut() {
-    this.auth.clearToken();
+    clearAccessToken();
     this.router.navigate(['/auth/login']);
   }
 
