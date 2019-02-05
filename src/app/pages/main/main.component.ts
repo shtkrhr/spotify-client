@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { clearAccessToken } from '../../core/auth/auth';
+import { logOut, onLogOut } from '../../core/auth/auth';
 import { Router } from '@angular/router';
 import { UserService } from '../../core/api/user.service';
 import { ReplaySubject } from 'rxjs';
@@ -12,17 +12,16 @@ import { User } from '../../core/api/responses/user';
 })
 export class MainComponent implements OnInit {
 
-  readonly user$ = new ReplaySubject<User>();
+  readonly user$ = this.userApi.me();
 
   constructor(private router: Router, private userApi: UserService) { }
 
   ngOnInit() {
-    this.userApi.me().subscribe(user => this.user$.next(user));
+    onLogOut().subscribe(_ => this.router.navigate(['/auth/login']));
   }
 
   logOut() {
-    clearAccessToken();
-    this.router.navigate(['/auth/login']);
+    logOut();
   }
 
 }

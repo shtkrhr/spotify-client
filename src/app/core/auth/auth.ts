@@ -1,4 +1,5 @@
 import { environment as env } from '../../../environments/environment';
+import { Subject } from 'rxjs';
 
 const ACCESS_TOKEN_KEY = 'access-token';
 
@@ -21,5 +22,13 @@ export const saveAccessToken = (accessToken: string) => localStorage.setItem(ACC
 
 export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN_KEY);
 
-export const clearAccessToken = () => localStorage.removeItem(ACCESS_TOKEN_KEY);
+const logOutEvent$ = new Subject();
 
+export const onLogOut = () => logOutEvent$.asObservable();
+
+const clearAccessToken = () => localStorage.removeItem(ACCESS_TOKEN_KEY);
+
+export const logOut = () => {
+  clearAccessToken();
+  logOutEvent$.next();
+};
