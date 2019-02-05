@@ -1,14 +1,10 @@
 <ng-container *ngIf="data$ | async as d">
-  <img *ngIf="d.artist.images[0]?.url" [src]="d.artist.images[0].url" style="max-width: 600px; max-height: 400px">
-  <h1>{{d.artist.name}}</h1>
+  <h1>
+    <a [href]="'https://open.spotify.com/artist/' + d.artist.id" target="_blank">{{d.artist.name}}</a>
+  </h1>
   <p>{{d.artist.followers.total | number}} followers</p>
-
-  <ul>
-    <li *ngFor="let related of d.relateds">
-      <a [routerLink]="['/artist', related.id]">
-        <img *ngIf="related.images[0]?.url" [src]="related.images[0].url" style="width: 100px">
-        {{related.name}}
-      </a>
-    </li>
-  </ul>
+  <sp-artist-relation-graph
+    [dataSet]="relationDataSet$ | async"
+    (artistClick)="onArtistClick($event)"
+  ></sp-artist-relation-graph>
 </ng-container>

@@ -4,6 +4,7 @@ import { Followers } from './followers';
 
 export interface Artist {
   id: string;
+  name: string;
   href: string;
   genres: string[];
   popularity: number;
