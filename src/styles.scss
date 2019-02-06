@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~normalize.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+:root, body {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  border: 0;
+}
+
+* {
+  font-family: "Avenir Next";
+}
