@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  //position: relative;
+  //height: 0;
+  //width: 100%;
+  //padding-top: 100%;
+  //width: 900px;
+  //padding-top: 900px;
+}
+
+svg {
+  //width: 100%;
+  //height: 100%;
+  //position: absolute;
+  //top: 0;
+  //left: 0;
+  //bottom: 0;
+  //right: 0;
+}
+
+svg ::ng-deep {
+  .links line {
+    stroke: #aaa;
+  }
+
+  .node {
+    pointer-events: all;
+    cursor: pointer;
+    &:active {
+      cursor: grabbing;
+    }
+    circle {
+      fill: #aaa;
+      stroke: #aaa;
+      stroke-width: 4px;
+    }
+    image {
+      pointer-events: none;
+    }
+
+    image, circle {
+      transition: transform .2s;
+    }
+    circle {
+      &:hover {
+        transform: scale(1.2, 1.2);
+        + image {
+          transform: scale(1.2, 1.2);
+        }
+        ~ .node-text {
+          display: block;
+        }
+      }
+    }
+  }
+  .node-text {
+    font-family: "Avenir Next";
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+    pointer-events: none;
+    text-shadow: 0 0 2px white, 0 0 5px rgba(white, .5);
+  }
+}

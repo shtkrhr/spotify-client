@@ -1,9 +1,14 @@
 <h1>Following Artists</h1>
 <ng-container *ngIf="data$ | async as d">
-  <h2>{{d.artists.length | number}} artists</h2>
+  <h2>{{d?.artists.length | number}} artists</h2>
+
+  <sp-artist-relation-diagram
+    [dataSet]="d?.relationDataSet"
+    (artistClick)="onArtistClick($event)"
+  ></sp-artist-relation-diagram>
 
   <ul>
-    <li *ngFor="let artist of d.artists">
+    <li *ngFor="let artist of d?.artists">
       <a [routerLink]="['/artist', artist.id]">
         <img *ngIf="artist.images[0]?.url" [src]="artist.images[0].url" style="width: 100px">
         {{artist.name}}
