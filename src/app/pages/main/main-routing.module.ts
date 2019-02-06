@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main.component';
-import { HomeComponent } from './home/home.component';
 import { AuthenticatedGuard } from '../../core/auth/authenticated.guard';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {
@@ -10,13 +10,17 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: '',
-        component: HomeComponent,
+        path: 'account',
+        component: AccountComponent,
       },
       {
         path: 'artist',
         loadChildren: 'src/app/pages/main/artist/artist.module#ArtistModule',
         canLoad: [AuthenticatedGuard],
+      },
+      {
+        path: '**',
+        redirectTo: 'account',
       },
     ],
   },

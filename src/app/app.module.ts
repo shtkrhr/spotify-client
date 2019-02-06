@@ -23,3 +23,6 @@ import { httpInterceptorProviders } from './core/api/interseptors/interceptor-pr
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// @todo: oauthのstate
+// @todo: player

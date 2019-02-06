@@ -1,10 +1,25 @@
-<ng-container *ngIf="data$ | async as d">
-  <h1>
-    <a [href]="'https://open.spotify.com/artist/' + d.artist.id" target="_blank">{{d.artist.name}}</a>
-  </h1>
-  <p>{{d.artist.followers.total | number}} followers</p>
-  <sp-artist-relation-graph
-    [dataSet]="relationDataSet$ | async"
+<div class="side-nav" *ngIf="data$ | async as d">
+  <header class="header">
+    <img class="artist-image" *ngIf="d.artist.images[0]" [src]="d.artist.images[0].url">
+    <h1>{{d.artist.name}}</h1>
+    <p>{{d.artist.followers.total | number}} followers</p>
+    <p class="genres">
+      <span class="genre" *ngFor="let genre of d.artist.genres">{{genre.toUpperCase()}}</span>
+    </p>
+  </header>
+
+  <nav class="navs">
+    <mat-nav-list *ngIf="extarnals$ | async as extarnals">
+      <a *ngFor="let extarnal of extarnals" mat-list-item [href]="extarnal.url" target="_blank">
+        <mat-icon mat-list-icon>open_in_new</mat-icon>
+        {{extarnal.title}}
+      </a>
+    </mat-nav-list>
+  </nav>
+</div>
+<div class="content" *ngIf="data$ | async as d">
+  <sp-artist-relation-diagram
+    [dataSet]="d?.relationDataSet"
     (artistClick)="onArtistClick($event)"
-  ></sp-artist-relation-graph>
-</ng-container>
+  ></sp-artist-relation-diagram>
+</div>

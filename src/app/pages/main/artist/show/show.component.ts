@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { ShowResolvedData } from './show.resolver';
 import { ArtistService } from '../../../../core/api/artist.service';
-import { map } from 'rxjs/operators';
 import { Artist } from '../../../../core/api/responses/artist';
-import { ArtistRelationDataSet } from '../../../../core/ui/artist-relation-graph/artist-relation-graph.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sp-show',
@@ -16,7 +15,9 @@ export class ShowComponent implements OnInit {
 
   readonly data$ = new ReplaySubject<ShowResolvedData>(1);
 
-  readonly relationDataSet$ = new ReplaySubject<ArtistRelationDataSet>(1);
+  readonly extarnals$ = this.data$.pipe(map(data => {
+    return Object.keys(data.artist.external_urls).map(title => ({title, url: data.artist.external_urls[title]}));
+  }));
 
   constructor(private route: ActivatedRoute, private artistApi: ArtistService, private router: Router) { }
 
@@ -25,29 +26,31 @@ export class ShowComponent implements OnInit {
       this.data$.next(data.data);
     });
 
-    this.data$.subscribe(data => {
-      const artist = data.artist;
-      const relateds = data.relateds;
-      const relations$ = combineLatest(relateds.map(relArtist => {
-        return this.artistApi.relatedArtists(relArtist.id).pipe(map(relRelArtists => {
-          return relRelArtists
-            .filter(relRelArtist => relateds.some(_relArtist => _relArtist.id === relRelArtist.id))
-            .map(relRelArtist => [relArtist.id, relRelArtist.id].sort());
-        }));
-      })).pipe(map((relationsList: [string, string][][]) => {
-        const result = [] as [string, string][];
-        relationsList.forEach((_relations: [string, string][]) => {
-          _relations
-            .filter(rel => result.every(_rel => rel.toString() !== _rel.toString()))
-            .forEach(rel => result.push(rel as any));
-        });
-        return result;
-      }));
+    this.data$.subscribe(data => console.log(data.artist));
 
-      relations$.subscribe(relations => {
-        this.relationDataSet$.next({artist, relateds, relations});
-      });
-    });
+    // this.data$.subscribe(data => {
+    //   const artist = data.artist;
+    //   const relateds = data.relateds;
+    //   const relations$ = combineLatest(relateds.map(relArtist => {
+    //     return this.artistApi.relatedArtists(relArtist.id).pipe(map(relRelArtists => {
+    //       return relRelArtists
+    //         .filter(relRelArtist => relateds.some(_relArtist => _relArtist.id === relRelArtist.id))
+    //         .map(relRelArtist => [relArtist.id, relRelArtist.id].sort());
+    //     }));
+    //   })).pipe(map((relationsList: [string, string][][]) => {
+    //     const result = [] as [string, string][];
+    //     relationsList.forEach((_relations: [string, string][]) => {
+    //       _relations
+    //         .filter(rel => result.every(_rel => rel.toString() !== _rel.toString()))
+    //         .forEach(rel => result.push(rel as any));
+    //     });
+    //     return result;
+    //   }));
+    //
+    //   relations$.subscribe(relations => {
+    //     this.relationDataSet$.next({artist, relateds, relations});
+    //   });
+    // });
   }
 
   onArtistClick(artist: Artist) {

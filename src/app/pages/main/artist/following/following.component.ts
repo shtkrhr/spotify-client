@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { IndexResolvedData } from './index.resolver';
+import { FollowingResolvedData } from './following.resolver';
 import { Artist } from '../../../../core/api/responses/artist';
 
-@Component({
-  selector: 'sp-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss'],
-})
-export class IndexComponent implements OnInit {
+// @todo: ジャンルとかで絞り込み
 
-  readonly data$ = new ReplaySubject<IndexResolvedData>(1);
+@Component({
+  selector: 'sp-following',
+  templateUrl: './following.component.html',
+  styleUrls: ['./following.component.scss'],
+})
+export class FollowingComponent implements OnInit {
+
+  readonly data$ = new ReplaySubject<FollowingResolvedData>(1);
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
@@ -22,7 +24,7 @@ export class IndexComponent implements OnInit {
   }
 
   onArtistClick(artist: Artist) {
-    return this.router.navigate(['/artist', artist.id]);
+    this.router.navigate(['/artist', artist.id]);
   }
 
 }

@@ -1,3 +1,49 @@
-sp-artist-relation-graph {
-  max-width: 800px;
+$side-nav-width: 300px;
+
+:host {
+  display: block;
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  width: $side-nav-width;
+  height: 100vh;
+  border-right: 1px solid black;
+  background: white;
+}
+
+.content {
+  padding-left: $side-nav-width;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.artist-image {
+  display: block;
+  width: 100%;
+}
+
+.header {}
+
+.navs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.genres {
+  line-height: 1;
+}
+.genre {
+  display: inline-block;
+  font-size: 10px;
+  color: white;
+  background: black;
+  line-height: 1;
+  padding: .2em .5em;
+  margin: 0 .2em 0 0;
 }

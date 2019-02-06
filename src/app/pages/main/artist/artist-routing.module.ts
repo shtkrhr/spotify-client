@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ArtistComponent } from './artist.component';
-import { IndexComponent } from './index/index.component';
+import { FollowingComponent } from './following/following.component';
 import { ShowComponent } from './show/show.component';
 
-import { IndexResolver } from './index/index.resolver';
+import { FollowingResolver } from './following/following.resolver';
 import { ShowResolver } from './show/show.resolver';
 
 const routes: Routes = [
@@ -13,10 +13,10 @@ const routes: Routes = [
     component: ArtistComponent,
     children: [
       {
-        path: '',
-        component: IndexComponent,
+        path: 'following',
+        component: FollowingComponent,
         resolve: {
-          data: IndexResolver,
+          data: FollowingResolver,
         },
       },
       {
@@ -26,6 +26,10 @@ const routes: Routes = [
           data: ShowResolver,
         },
       },
+      {
+        path: '**',
+        redirectTo: 'following',
+      },
     ],
   },
 ];
@@ -34,7 +38,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [
-    IndexResolver,
+    FollowingResolver,
     ShowResolver,
   ],
 })

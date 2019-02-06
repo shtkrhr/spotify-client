@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { logOut, onLogOut } from '../../core/auth/auth';
+import { onLogOut } from '../../core/auth/auth';
 import { Router } from '@angular/router';
 import { UserService } from '../../core/api/user.service';
-import { ReplaySubject } from 'rxjs';
-import { User } from '../../core/api/responses/user';
 
 @Component({
   selector: 'sp-main',
@@ -18,10 +16,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     onLogOut().subscribe(_ => this.router.navigate(['/auth/login']));
-  }
-
-  logOut() {
-    logOut();
   }
 
 }

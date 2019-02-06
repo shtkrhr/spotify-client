@@ -1,4 +1,4 @@
-$side-nav-width: 180px;
+$side-nav-width: 300px;
 
 :host {
   display: block;
@@ -7,27 +7,16 @@ $side-nav-width: 180px;
 .side-nav {
   position: fixed;
   top: 0;
-  left: 0;
   width: $side-nav-width;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   border-right: 1px solid black;
   background: white;
-  z-index: 100;
-}
-
-[mat-list-item] {
-  font-weight: 600;
-
-  &.active {
-    background: black;
-    color: white;
-  }
 }
 
 .content {
   padding-left: $side-nav-width;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -8,13 +8,13 @@ import { ArtistLink, ArtistRelationDataSet } from '../../../../core/ui/artist-re
 import { ArtistService } from '../../../../core/api/artist.service';
 import { combineLatest, Observable, of } from 'rxjs';
 
-export interface IndexResolvedData {
+export interface FollowingResolvedData {
   artists: Artist[];
   relationDataSet: ArtistRelationDataSet;
 }
 
 @Injectable()
-export class IndexResolver implements Resolve<IndexResolvedData> {
+export class FollowingResolver implements Resolve<FollowingResolvedData> {
 
   constructor(private followApi: FollowService, private artistApi: ArtistService) {
   }
