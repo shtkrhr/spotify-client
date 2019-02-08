@@ -1,0 +1,14 @@
+<div *ngIf="artists?.total">
+  <p>{{artists.total > 50 ? '50+' : artists.total}} artists</p>
+  <p *ngFor="let item of artists.items">
+    <a [routerLink]="['/artist', item.id]">{{item.name}}</a>
+  </p>
+</div>
+
+<div class="message no-result" *ngIf="noResult">
+  Fill the Search Params
+</div>
+
+<div class="message not-found" *ngIf="notFound">
+  Not Found
+</div>

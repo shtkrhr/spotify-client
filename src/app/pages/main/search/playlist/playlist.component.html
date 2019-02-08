@@ -1,0 +1,14 @@
+<div *ngIf="playlists?.total">
+  <p>{{playlists.total > 50 ? '50+' : playlists.total}} playlists</p>
+  <p *ngFor="let item of playlists.items">
+    {{item.name}}
+  </p>
+</div>
+
+<div class="message no-result" *ngIf="noResult">
+  Fill the Search Params
+</div>
+
+<div class="message not-found" *ngIf="notFound">
+  Not Found
+</div>

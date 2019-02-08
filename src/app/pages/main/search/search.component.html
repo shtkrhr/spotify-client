@@ -1,0 +1,86 @@
+<div class="side-nav" [class.opened]="isSideOpened">
+  <form #form="ngForm" (ngSubmit)="onSubmit()" *ngIf="data">
+    <mat-form-field>
+      <input name="q" placeholder="Query" matInput [(ngModel)]="data.params.q">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-chip-list #genreChipList>
+        <mat-chip *ngFor="let genre of data.params.genres" (removed)="removeGenre(genre)">
+          {{genre.toUpperCase()}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="Genres"
+          name="genre"
+          matInput
+          #genreInput
+          [formControl]="genreCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="genreChipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="addGenre($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onGenreSelected($event)">
+        <mat-option *ngFor="let genre of filteredGenres$ | async" [value]="genre">
+          {{genre.toUpperCase()}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-slide-toggle name="ranged" [(ngModel)]="rangedYear" (ngModelChange)="updateYearParam()">Ranged</mat-slide-toggle>
+    <mat-form-field *ngIf="!rangedYear">
+      <input name="year" placeholder="Year" type="number" matInput [(ngModel)]="year" (ngModelChange)="updateYearParam()">
+    </mat-form-field>
+    <div class="ranged-year" *ngIf="rangedYear">
+      <mat-form-field>
+        <input name="year-start" placeholder="Year Start" type="number" matInput [(ngModel)]="yearStart" (ngModelChange)="updateYearParam()">
+      </mat-form-field>
+      <span class="separator">~</span>
+      <mat-form-field>
+        <input name="year-end"placeholder="Year End" type="number" matInput [(ngModel)]="yearEnd" (ngModelChange)="updateYearParam()">
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-chip-list #exceptedsChipList>
+        <mat-chip *ngFor="let excepted of data.params.excepteds" (removed)="removeExcepted(excepted)">
+          {{excepted}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input
+          name="excepted"
+          placeholder="Excepteds"
+          matInput
+          #exceptedInput
+          [formControl]="exceptedCtrl"
+          [matChipInputFor]="exceptedsChipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="addExcepted($event)">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <div class="button">
+      <button mat-flat-button color="primary" [disabled]="!canSubmit">Submit</button>
+    </div>
+  </form>
+
+  <button class="toggle-button" mat-flat-button color="primary" (click)="toggleSideNav()">
+    <mat-icon *ngIf="!isSideOpened">chevron_right</mat-icon>
+    <mat-icon *ngIf="isSideOpened">chevron_left</mat-icon>
+  </button>
+</div>
+<div class="content">
+  <nav class="type-nav">
+    <a class="type-nav__item" routerLink="./overview" queryParamsHandling="preserve" [class.active]="page.pathType === 'overview'">Overview</a>
+    <a class="type-nav__item" routerLink="./artist" queryParamsHandling="preserve" [class.active]="page.pathType === 'artist'">Artist</a>
+    <a class="type-nav__item" routerLink="./album" queryParamsHandling="preserve" [class.active]="page.pathType === 'album'">Album</a>
+    <a class="type-nav__item" routerLink="./track" queryParamsHandling="preserve" [class.active]="page.pathType === 'track'">Track</a>
+    <a class="type-nav__item" routerLink="./playlist" queryParamsHandling="preserve" [class.active]="page.pathType === 'playlist'">Playlist</a>
+  </nav>
+  <div class="child">
+    <router-outlet></router-outlet>
+  </div>
+</div>

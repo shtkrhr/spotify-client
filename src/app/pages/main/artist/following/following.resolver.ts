@@ -34,7 +34,7 @@ export class FollowingResolver implements Resolve<FollowingResolvedData> {
         });
 
         return combineLatest(linksObservables).pipe(
-          catchError(_ => of([])),
+          catchError(_ => of([] as ArtistLink[][])),
           map(linksList => {
             const links = linksList.reduce((all, _links) => {
               all.push(..._links);

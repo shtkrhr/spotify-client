@@ -1,0 +1,14 @@
+<div *ngIf="tracks?.total">
+  <p>{{tracks.total > 50 ? '50+' : tracks.total}} tracks</p>
+  <p *ngFor="let item of tracks.items">
+    {{item.name}}
+  </p>
+</div>
+
+<div class="message no-result" *ngIf="noResult">
+  Fill the Search Params
+</div>
+
+<div class="message not-found" *ngIf="notFound">
+  Not Found
+</div>

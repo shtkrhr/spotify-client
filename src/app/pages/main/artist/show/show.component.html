@@ -4,7 +4,7 @@
     <h1>{{d.artist.name}}</h1>
     <p>{{d.artist.followers.total | number}} followers</p>
     <p class="genres">
-      <span class="genre" *ngFor="let genre of d.artist.genres">{{genre.toUpperCase()}}</span>
+      <a class="genre" *ngFor="let genre of d.artist.genres" [routerLink]="['/search']" [queryParams]="{genres: genre}">{{genre.toUpperCase()}}</a>
     </p>
   </header>
 

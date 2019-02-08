@@ -1,0 +1,39 @@
+<div class="sections" *ngIf="data && data.result">
+  <section class="section artist" *ngIf="artists?.total">
+    <h2><a routerLink="../artist" queryParamsHandling="preserve">Artist</a></h2>
+    <div class="section__content">
+      <p *ngFor="let item of artists.items.slice(0, 5)">
+        <a [routerLink]="['/artist', item.id]">{{item.name}}</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section album" *ngIf="albums?.total">
+    <h2><a routerLink="../album" queryParamsHandling="preserve">Album</a></h2>
+    <div class="section__content">
+      <p *ngFor="let item of albums.items.slice(0, 5)">{{item.name}}</p>
+    </div>
+  </section>
+
+  <section class="section track" *ngIf="tracks?.total">
+    <h2><a routerLink="../track" queryParamsHandling="preserve">Track</a></h2>
+    <div class="section__content">
+      <p *ngFor="let item of tracks.items.slice(0, 5)">{{item.name}}</p>
+    </div>
+  </section>
+
+  <section class="section playlist" *ngIf="playlists?.total">
+    <h2><a routerLink="../playlist" queryParamsHandling="preserve">Playlist</a></h2>
+    <div class="section__content">
+      <p *ngFor="let item of playlists.items.slice(0, 5)">{{item.name}}</p>
+    </div>
+  </section>
+</div>
+
+<div class="message no-result" *ngIf="noResult">
+  Fill the Search Params
+</div>
+
+<div class="message not-found" *ngIf="notFound">
+  Not Found
+</div>

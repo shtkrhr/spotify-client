@@ -1,0 +1,137 @@
+$toggle-button-width: 20px;
+$side-nav-width-narrow: $toggle-button-width;
+$side-nav-width-wide: 600px;
+
+:host {
+  display: block;
+
+  &.navigating {
+    .child {
+      opacity: .5;
+      pointer-events: none;
+    }
+  }
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  width: $side-nav-width-narrow;
+  height: 100vh;
+  border-right: 1px solid black;
+  background: white;
+  transition: all .3s;
+  z-index: 99;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+
+  &.opened {
+    width: $side-nav-width-wide;
+
+    + .content {
+      padding-left: $side-nav-width-wide;
+    }
+  }
+
+  form {
+    flex: 1;
+  }
+
+  .toggle-button {
+    flex: 0 0 $toggle-button-width;
+    min-width: 0px;
+    padding: 0;
+  }
+}
+
+.content {
+  padding-left: $side-nav-width-narrow;
+  min-height: 100vh;
+  transition: all .3s;
+  overflow: hidden;
+}
+
+.type-nav {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+
+  &__item {
+    display: block;
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 1em 1em .3em;
+    position: relative;
+
+    &.active {
+      cursor: default;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 2em;
+        height: .2em;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        margin-left: -1em;
+        background: black;
+      }
+    }
+  }
+}
+
+mat-form-field {
+  display: block;
+}
+
+.mat-chip {
+  font-size: 12px;
+  min-height: 26px;
+  .mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.mat-option {
+  ::ng-deep .mat-option-text {
+    font-size: 14px;
+    line-height: 14px * 3;
+  }
+}
+
+.button {
+  display: flex;
+  justify-content: stretch;
+
+  .mat-flat-button {
+    flex: 1;
+  }
+}
+
+.mat-flat-button {
+  border-radius: 0;
+  background: black;
+}
+
+.ranged-year {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .mat-form-field {
+    flex: 1 1 45%;
+  }
+
+  .separator {
+    flex: 1 1 10%;
+    font-size: 30px;
+    text-align: center;
+  }
+}
