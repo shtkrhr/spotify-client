@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { CursorBasedPaging } from './responses/cursor-based-paging';
+import { CursorBasedPaging } from './responses/paging';
 import { Artist } from './responses/artist';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { InMemoryCache } from '../cache/in-memory-cache';
-import { getAccessToken } from '../auth/auth';
+import { getAccessToken, onLogOut } from '../auth/auth';
 import { ArtistService } from './artist.service';
 
 @Injectable({
@@ -17,7 +17,9 @@ export class FollowService {
 
   private followingArtistsCache = new InMemoryCache<CursorBasedPaging<Artist>>(90 * 60);
 
-  constructor(private http: HttpClient, private artistApi: ArtistService) {}
+  constructor(private http: HttpClient, private artistApi: ArtistService) {
+    onLogOut().subscribe(_ => this.followingArtistsCache.clear())
+  }
 
   artists(limit: number = 50, after?: string): Observable<CursorBasedPaging<Artist>> {
     const token = getAccessToken();
@@ -28,7 +30,7 @@ export class FollowService {
     return this.followingArtistsCache.get(cacheKey).pipe(catchError(_ => {
       const params = Object.assign({type: 'artist', limit}, after ? {after} : {});
       return this.http.get(`${this.baseUrl}/me/following`, {params}).pipe(
-        map((res: any) => res.artists),
+        map<any, CursorBasedPaging<Artist>>(res => res.artists),
         tap(paging => {
           this.followingArtistsCache.set(cacheKey, paging);
           paging.items.forEach(this.artistApi.cacheArtist.bind(this.artistApi));

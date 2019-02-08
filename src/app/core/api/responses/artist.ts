@@ -1,16 +1,19 @@
 import { Image } from './image';
-import { ExternalUrl } from './external-url';
+import { ExternalUrl } from './external';
 import { Followers } from './followers';
 
-export interface Artist {
+export interface Artist extends ArtistSimplified {
+  genres: string[];
+  popularity: number;
+  images: Image[];
+  followers: Followers;
+}
+
+export interface ArtistSimplified {
   id: string;
   name: string;
   href: string;
-  genres: string[];
-  popularity: number;
   type: 'artist';
   uri: string;
-  images: Image[];
   external_urls: ExternalUrl;
-  followers: Followers;
 }
