@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { onLogOut } from '../auth/auth';
 import { InMemoryCache } from '../cache/in-memory-cache';
 import { Track } from './responses/track';
 import { catchError, tap } from 'rxjs/operators';
@@ -19,7 +18,6 @@ export class TrackService {
   private featuresCache = new InMemoryCache<AudioFeatures>();
 
   constructor(private http: HttpClient) {
-    onLogOut().subscribe(_ => this.trackCache.clear());
   }
 
   show(id: string): Observable<Track> {
