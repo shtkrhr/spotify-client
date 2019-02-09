@@ -19,6 +19,9 @@ import { TrackComponent } from './track/track.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchService } from './search.service';
 
+// @todo: 結果表示のレイアウト
+// @todo: 諸々のコンポーネント
+
 @NgModule({
   declarations: [
     SearchComponent,

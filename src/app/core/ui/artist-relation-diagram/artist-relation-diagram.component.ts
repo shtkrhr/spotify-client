@@ -5,6 +5,7 @@ import { Artist } from '../../api/responses/artist';
 import { ArtistLink, ArtistNode, ArtistRelationDataSet, D3Selection, Range, LinkCountData } from './artist-relation-diagram.type';
 
 // @todo: resize
+// @todo: hover style
 
 const isSameLink = (a: ArtistLink, b: ArtistLink) => a.target === b.target && a.source === b.source;
 

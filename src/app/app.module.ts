@@ -26,3 +26,7 @@ export class AppModule { }
 
 // @todo: oauthのstate
 // @todo: player
+// @todo: artist/:id/overview
+// @todo: /track
+// @todo: /album
+// @todo: /playlist (ownerでfilter)

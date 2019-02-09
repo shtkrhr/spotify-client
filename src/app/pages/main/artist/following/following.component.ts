@@ -5,6 +5,7 @@ import { FollowingResolvedData } from './following.resolver';
 import { Artist } from '../../../../core/api/responses/artist';
 
 // @todo: ジャンルとかで絞り込み
+// @todo: followしてないけど、お気に入りの曲があるアーティスト
 
 @Component({
   selector: 'sp-following',
