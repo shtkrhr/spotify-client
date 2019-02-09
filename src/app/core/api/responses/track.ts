@@ -35,3 +35,8 @@ export interface TrackLink {
   type: 'track';
   uri: string;
 }
+
+export interface SavedTrack {
+  added_at: string;
+  track: Track;
+}
