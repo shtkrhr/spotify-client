@@ -7,7 +7,7 @@ import { Artist } from '../../../../core/api/responses/artist';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'sp-show',
+  selector: 'sp-artist-show',
   templateUrl: './show.component.html',
   styleUrls: ['./show.component.scss'],
 })

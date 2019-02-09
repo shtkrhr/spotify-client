@@ -18,7 +18,9 @@
   <section class="section track" *ngIf="tracks?.total">
     <h2><a routerLink="../track" queryParamsHandling="preserve">Track</a></h2>
     <div class="section__content">
-      <p *ngFor="let item of tracks.items.slice(0, 5)">{{item.name}}</p>
+      <p *ngFor="let item of tracks.items.slice(0, 5)">
+        <a [routerLink]="['/track', item.id]">{{item.name}}</a>
+      </p>
     </div>
   </section>
 

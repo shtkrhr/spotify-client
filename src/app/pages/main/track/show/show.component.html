@@ -1,0 +1,40 @@
+<div class="side-nav" *ngIf="data">
+  <header class="header">
+    <img class="track-image" *ngIf="data.track.album.images[0]" [src]="data.track.album.images[0].url">
+    <h1>{{data.track.name}}</h1>
+    <h3>{{data.track.album.name}}</h3>
+    <h3><a [routerLink]="['/artist', data.track.artists[0].id]">{{data.track.artists[0].name}}</a></h3>
+  </header>
+
+  <nav class="navs">
+    <mat-nav-list *ngIf="data">
+      <a *ngFor="let external of externals" mat-list-item [href]="external.url" target="_blank">
+        <mat-icon mat-list-icon>open_in_new</mat-icon>
+        {{external.title}}
+      </a>
+    </mat-nav-list>
+  </nav>
+
+</div>
+<div class="content">
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef> Value </th>
+      <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef> Note </th>
+      <td mat-cell *matCellDef="let element"> {{element.note || '--'}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['name', 'value', 'note']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name', 'value', 'note'];"></tr>
+  </table>
+</div>

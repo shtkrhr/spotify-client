@@ -1,0 +1,7 @@
+<ul *ngIf="groups$ && groups$ | async as groups">
+  <li *ngFor="let group of groups">
+    <a [routerLink]="['/album', group.album.id]">
+      {{group.album.name}} ({{group.tracks.length | number}})
+    </a>
+  </li>
+</ul>

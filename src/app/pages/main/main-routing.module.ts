@@ -13,6 +13,14 @@ const routes: Routes = [
         component: AccountComponent,
       },
       {
+        path: 'favorite',
+        loadChildren: 'src/app/pages/main/favorite/favorite.module#FavoriteModule',
+      },
+      {
+        path: 'track',
+        loadChildren: 'src/app/pages/main/track/track.module#TrackModule',
+      },
+      {
         path: 'artist',
         loadChildren: 'src/app/pages/main/artist/artist.module#ArtistModule',
       },

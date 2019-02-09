@@ -1,0 +1,5 @@
+<ul *ngIf="data && data.tracksCollection$ | async as collection">
+  <li *ngFor="let item of collection.items">
+    <a [routerLink]="['/track', item.track.id]">{{item.track.name}}</a>
+  </li>
+</ul>

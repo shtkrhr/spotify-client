@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+
+.type-nav {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+
+  &__item {
+    display: block;
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 1em 1em .3em;
+    position: relative;
+
+    &.active {
+      cursor: default;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 2em;
+        height: .2em;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        margin-left: -1em;
+        background: black;
+      }
+    }
+  }
+}
+
+.progress {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  span {
+    text-align: right;
+    width: 12em;
+  }
+}

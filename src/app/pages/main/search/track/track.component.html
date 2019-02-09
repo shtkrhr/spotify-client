@@ -1,7 +1,7 @@
 <div *ngIf="tracks?.total">
   <p>{{tracks.total > 50 ? '50+' : tracks.total}} tracks</p>
   <p *ngFor="let item of tracks.items">
-    {{item.name}}
+    <a [routerLink]="['/track', item.id]">{{item.name}}</a>
   </p>
 </div>
 
