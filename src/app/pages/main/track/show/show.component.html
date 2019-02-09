@@ -2,8 +2,12 @@
   <header class="header">
     <img class="track-image" *ngIf="data.track.album.images[0]" [src]="data.track.album.images[0].url">
     <h1>{{data.track.name}}</h1>
-    <h3>{{data.track.album.name}}</h3>
-    <h3><a [routerLink]="['/artist', data.track.artists[0].id]">{{data.track.artists[0].name}}</a></h3>
+    <h3>
+      <a [routerLink]="['/album', data.track.album.id]">{{data.track.album.name}}</a>
+    </h3>
+    <h3>
+      <a [routerLink]="['/artist', data.track.artists[0].id]">{{data.track.artists[0].name}}</a>
+    </h3>
   </header>
 
   <nav class="navs">

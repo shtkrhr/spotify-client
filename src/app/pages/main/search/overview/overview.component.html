@@ -11,7 +11,9 @@
   <section class="section album" *ngIf="albums?.total">
     <h2><a routerLink="../album" queryParamsHandling="preserve">Album</a></h2>
     <div class="section__content">
-      <p *ngFor="let item of albums.items.slice(0, 5)">{{item.name}}</p>
+      <p *ngFor="let item of albums.items.slice(0, 5)">
+        <a [routerLink]="['/album', item.id]">{{item.name}}</a>
+      </p>
     </div>
   </section>
 
@@ -27,7 +29,9 @@
   <section class="section playlist" *ngIf="playlists?.total">
     <h2><a routerLink="../playlist" queryParamsHandling="preserve">Playlist</a></h2>
     <div class="section__content">
-      <p *ngFor="let item of playlists.items.slice(0, 5)">{{item.name}}</p>
+      <p *ngFor="let item of playlists.items.slice(0, 5)">
+        <a [routerLink]="['/playlist', item.id]">{{item.name}}</a>
+      </p>
     </div>
   </section>
 </div>

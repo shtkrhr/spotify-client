@@ -1,7 +1,7 @@
 <div *ngIf="playlists?.total">
   <p>{{playlists.total > 50 ? '50+' : playlists.total}} playlists</p>
   <p *ngFor="let item of playlists.items">
-    {{item.name}}
+    <a [routerLink]="['/playlist', item.id]">{{item.name}}</a>
   </p>
 </div>
 

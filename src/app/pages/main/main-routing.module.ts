@@ -17,6 +17,14 @@ const routes: Routes = [
         loadChildren: 'src/app/pages/main/favorite/favorite.module#FavoriteModule',
       },
       {
+        path: 'album',
+        loadChildren: 'src/app/pages/main/album/album.module#AlbumModule',
+      },
+      {
+        path: 'playlist',
+        loadChildren: 'src/app/pages/main/playlist/playlist.module#PlaylistModule',
+      },
+      {
         path: 'track',
         loadChildren: 'src/app/pages/main/track/track.module#TrackModule',
       },
