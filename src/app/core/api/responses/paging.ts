@@ -9,6 +9,7 @@ export interface CursorBasedPaging<TItem> extends PagingBase<TItem> {
 
 export interface Cursor {
   after: string;
+  before?: string;
 }
 
 interface PagingBase<TItem> {
