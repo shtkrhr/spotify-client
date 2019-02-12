@@ -1,0 +1,38 @@
+<div class="controller">
+
+  <div class="left">
+    <sp-player-track-info *ngIf="state$ | async as state" [state]="state" (nav)="navEvent.emit($event)"></sp-player-track-info>
+  </div>
+
+  <div class="center" *ngIf="state$ | async as state">
+
+    <div class="main-actions">
+      <a sp-player-action role="button" [active]="state.shuffle" (click)="toggleShuffle()">shuffle</a>
+
+      <a sp-player-action role="button" (click)="prev()" [disabled]="state.disallows.skipping_prev && state.disallows.seeking">skip_previous</a>
+
+      <a sp-player-action role="button" (click)="seek(-10 * 1000)" [disabled]="state.disallows.seeking">replay_10</a>
+
+      <a sp-player-action role="button" *ngIf="!state.disallows.resuming" (click)="playerSdk.resume()" class="play">play_arrow</a>
+      <a sp-player-action role="button" *ngIf="!state.disallows.pausing" (click)="playerSdk.pause()" class="play">pause</a>
+
+      <a sp-player-action role="button" (click)="seek(10 * 1000)" [disabled]="state.disallows.seeking">forward_10</a>
+
+      <a sp-player-action role="button" (click)="next()" [disabled]="state.disallows.skipping_next">skip_next</a>
+
+      <a sp-player-action role="button" *ngIf="state.repeat_mode == repeatMode.No" (click)="toggleRepeat()" [active]="false">repeat</a>
+      <a sp-player-action role="button" *ngIf="state.repeat_mode == repeatMode.Full" (click)="toggleRepeat()" [active]="true">repeat</a>
+      <a sp-player-action role="button" *ngIf="state.repeat_mode == repeatMode.Once" (click)="toggleRepeat()" [active]="true">repeat_one</a>
+    </div>
+
+    <sp-player-seek-bar [state]="state"></sp-player-seek-bar>
+  </div>
+
+  <div class="activate" *ngIf="!(state$ | async) && playerSdk.deviceId">
+    <a sp-player-action role="button" (click)="activate()" class="play">play_arrow</a>
+    <button mat-flat-button (click)="activate()">Play on this App.</button>
+  </div>
+
+  <div class="right"></div>
+</div>
+

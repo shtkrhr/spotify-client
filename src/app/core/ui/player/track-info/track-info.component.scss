@@ -1,0 +1,55 @@
+$jacket-width: 50px;
+$gutter: 10px;
+
+:host {
+  display: block;
+  display: flex;
+  align-items: center;
+}
+
+.jacket-link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  width: $jacket-width;
+  height: $jacket-width;
+}
+
+.jacket {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: black;
+}
+
+.meta {
+  padding-left: $gutter;
+  width: calc(100% - #{$jacket-width + $gutter});
+}
+
+.artists {
+  color: rgba(black, .7);
+  display: block;
+}
+
+.name {
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.track {
+    display: inline-block;
+    font-size: 14px;
+    color: black;
+  }
+  &.artist {
+    font-size: 12px;
+    color: rgba(black, .7);
+  }
+}

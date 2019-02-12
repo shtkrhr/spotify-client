@@ -1,0 +1,12 @@
+<a class="jacket-link" (click)="jacketClick()">
+  <img *ngIf="jacketUrl" class="jacket" [src]="jacketUrl">
+</a>
+<div class="meta">
+  <a class="name track" (click)="trackClick()" *ngIf="track">{{track.name}}</a>
+  <span class="artists" *ngIf="artists">
+    <ng-container *ngFor="let a of artists; let last = last">
+      <a class="name artist" (click)="artistClick(a.uri)">{{a.name}}</a>
+      <span *ngIf="!last">, </span>
+    </ng-container>
+  </span>
+</div>

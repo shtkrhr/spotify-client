@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  background: white;
+  color: black;
+  border-top: 1px solid black;
+}
+
+.controller {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  height: 100%;
+}
+
+.left {
+  width: 300px;
+}
+
+.center {
+  width: 500px;
+}
+
+.right {
+  width: 300px;
+}
+
+sp-player-seek-bar {
+  width: 100%;
+  height: 4px;
+  margin-top: 10px;
+}
+
+.main-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+[sp-player-action] {
+  margin: 0 7px;
+
+  &.play {
+    color: black;
+    border: 1px solid black;
+    width: 42px;
+    height: 42px;
+
+    ::ng-deep .mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
+
+.activate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+

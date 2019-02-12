@@ -1,0 +1,41 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.bar {
+  height: 100%;
+  background: darkgray;
+  transition: all .1s;
+  transition-delay: 1s;
+  background: rgba(black, .3);
+  cursor: pointer;
+}
+
+.progress {
+  height: 100%;
+  width: 100%;
+  background: black;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.time {
+  color: rgba(black, .8);
+  font-size: 12px;
+  line-height: 1;
+  user-select: none;
+  position: absolute;
+  top: 50%;
+  margin-top: -.5em;
+
+  &.current {
+    text-align: right;
+    right: 100%;
+    padding-right: .3em;
+  }
+  &.total {
+    left: 100%;
+    padding-left: .3em;
+  }
+}
