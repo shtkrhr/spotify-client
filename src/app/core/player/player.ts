@@ -4,15 +4,15 @@ export interface Player {
   connect(): Promise<boolean>;
   disconnect(): void;
   getCurrentState(): Promise<WebPlaybackState | undefined>;
-  setName(name: string): Promise;
+  setName(name: string): Promise<void>;
   getVolume(): Promise<number>;
-  setVolume(volume: number): Promise;
-  pause(): Promise;
-  resume(): Promise;
-  togglePlay(): Promise;
-  seek(position: number): Promise;
-  previousTrack(): Promise;
-  nextTrack(): Promise;
+  setVolume(volume: number): Promise<void>;
+  pause(): Promise<void>;
+  resume(): Promise<void>;
+  togglePlay(): Promise<void>;
+  seek(position: number): Promise<void>;
+  previousTrack(): Promise<void>;
+  nextTrack(): Promise<void>;
 }
 
 export interface WebPlaybackPlayer {
@@ -34,9 +34,11 @@ export interface WebPlaybackState {
     skipping_prev: boolean;     // `seeking` will be set to `true` when playing an ad track.
   };
   paused: boolean;
+  duration: number;
   position: number;
   repeat_mode: RepearMode;
   shuffle: boolean;
+  timestamp: number;
   track_window: {
     current_track: WebPlaybackTrack;      // The track currently on local playback
     previous_tracks: WebPlaybackTrack[];  // Previously played tracks. Number can vary.
@@ -64,5 +66,5 @@ export interface WebPlaybackError {
 }
 
 export enum RepearMode {
-  No, Once, Full,
+  No, Full, Once,
 }

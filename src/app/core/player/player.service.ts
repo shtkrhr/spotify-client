@@ -15,32 +15,6 @@ export class PlayerService {
     return this._deviceId;
   }
 
-  get sdkReady$() {
-    return this._sdkReady$.asObservable();
-  }
-
-  get ready$() {
-    return this._ready$.asObservable();
-  }
-  get notReady$() {
-    return this._notReady$.asObservable();
-  }
-  get playerStateChanged$() {
-    return this._playerStateChanged$.asObservable();
-  }
-  get initializationError$() {
-    return this._initializationError$.asObservable();
-  }
-  get authenticationError$() {
-    return this._authenticationError$.asObservable();
-  }
-  get accountError$() {
-    return this._accountError$.asObservable();
-  }
-  get playbackError$() {
-    return this._playbackError$.asObservable();
-  }
-
   private _isSdkReady = false;
   private _deviceId?: string;
   private player?: Player;
@@ -85,10 +59,35 @@ export class PlayerService {
     document.getElementsByTagName('head')[0].appendChild(script);
   }
 
+  sdkReady$() {
+    return this._sdkReady$.asObservable();
+  }
+  ready$() {
+    return this._ready$.asObservable();
+  }
+  notReady$() {
+    return this._notReady$.asObservable();
+  }
+  playerStateChanged$() {
+    return this._playerStateChanged$.asObservable();
+  }
+  initializationError$() {
+    return this._initializationError$.asObservable();
+  }
+  authenticationError$() {
+    return this._authenticationError$.asObservable();
+  }
+  accountError$() {
+    return this._accountError$.asObservable();
+  }
+  playbackError$() {
+    return this._playbackError$.asObservable();
+  }
+
   connect(name: string, getAccessToken: () => string): Observable<boolean> {
     this.disconnect();
     const params = {name, getOAuthToken: cb => cb(getAccessToken())};
-    const player = new window['Spotify']['Player'](params);
+    const player = new window['Spotify']['Player'](params) as Player;
 
     Object.keys(this.eventListeners).forEach(eventName => {
       player.addListener(eventName, this.eventListeners[eventName]);
@@ -117,11 +116,11 @@ export class PlayerService {
     return from(this.player.getCurrentState());
   }
 
-  setName(name: string): Observable {
+  setName(name: string): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
-    return from(this.player.setName());
+    return from(this.player.setName(name));
   }
 
   getVolume(): Observable<number> {
@@ -131,49 +130,49 @@ export class PlayerService {
     return from(this.player.getVolume());
   }
 
-  setVolume(volume: number): Observable {
+  setVolume(volume: number): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
     return from(this.player.setVolume(volume / 100));
   }
 
-  pause(): Observable {
+  pause(): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
     return from(this.player.pause());
   }
 
-  resume(): Observable {
+  resume(): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
     return from(this.player.resume());
   }
 
-  togglePlay(): Observable {
+  togglePlay(): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
     return from(this.player.togglePlay());
   }
 
-  seek(position: number): Observable {
+  seek(position: number): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
     return from(this.player.seek(position));
   }
 
-  previousTrack(): Observable {
+  previousTrack(): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
     return from(this.player.previousTrack());
   }
 
-  nextTrack(): Observable {
+  nextTrack(): Observable<void> {
     if (!this.player) {
       throw new Error;
     }
