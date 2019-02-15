@@ -1,0 +1,7 @@
+<ng-container *ngIf="data && data.tracksCollection$ | async as collection">
+  <sp-track-list
+    [tracks]="collection.items"
+    [context]="data.album"
+    [columns]="['index', 'play', 'name', 'duration']"
+  ></sp-track-list>
+</ng-container>

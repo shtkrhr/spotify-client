@@ -1,0 +1,36 @@
+<div class="axis-selects">
+  <mat-form-field>
+    <mat-select name="xAxis" [(ngModel)]="xAxisType" placeholder="X axis" (ngModelChange)="onAxisChange()">
+      <mat-option *ngFor="let type of allAxisTypes" [value]="type">{{type}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select name="yAxis" [(ngModel)]="yAxisType" placeholder="Y axis" (ngModelChange)="onAxisChange()">
+      <mat-option *ngFor="let type of allAxisTypes" [value]="type">{{type}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<sp-features-chart
+  *ngIf="data"
+  [featuresList]="data.featuresList$ | async"
+  [xAxisType]="xAxisType"
+  [yAxisType]="yAxisType"
+  (dataSelect)="onSelect($event)"
+></sp-features-chart>
+
+<div class="selected-feature-values" *ngIf="selectedFeatureValues$ | async as values">
+  <p>
+    X - <span>{{values.x.name}}:</span> {{values.x.value}}
+  </p>
+  <p>
+    Y - <span>{{values.y.name}}:</span> {{values.y.value}}
+  </p>
+</div>
+
+<ng-container *ngIf="selectedTracks$ | async as tracks">
+  <sp-track-list
+    [tracks]="tracks"
+    [context]="data.album"
+    [columns]="['image','play','name','artist','album']"
+  ></sp-track-list>
+</ng-container>

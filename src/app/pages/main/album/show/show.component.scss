@@ -1,0 +1,55 @@
+$side-nav-width: 300px;
+
+:host {
+  display: block;
+}
+
+.side-nav {
+  position: fixed;
+  top: 0;
+  width: $side-nav-width;
+  height: 100vh;
+  border-right: 1px solid black;
+  background: white;
+}
+
+.content {
+  padding-left: $side-nav-width;
+}
+
+.album-image {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.header {}
+
+.navs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+
+  [mat-list-item] {
+    font-weight: 600;
+    &.active {
+      background: black;
+      color: white;
+    }
+  }
+}
+
+.genres {
+  line-height: 1;
+}
+.genre {
+  display: inline-block;
+  font-size: 10px;
+  color: white;
+  background: black;
+  line-height: 1;
+  padding: .2em .5em;
+  margin: 0 .2em 0 0;
+  text-decoration: none;
+}
