@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Device } from './responses/device';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { CurrentlyPlaying, PlayingContext, RepeatState } from './responses/playing-context';
 import { CursorBasedPaging } from './responses/paging';
 import { PlayHistory } from './responses/play-history';
 import { PlayRequestBody } from './request-params/play';
 import { removeEmptyKey } from '../util/util';
+import { TrackSimplified } from './responses/track';
+import { AlbumBase } from './responses/album';
+import { ArtistSimplified } from './responses/artist';
+import { PlaylistBase } from './responses/playlist';
+
+export type PlayContext = AlbumBase | ArtistSimplified | PlaylistBase | TrackSimplified[];
 
 @Injectable({
   providedIn: 'root',
@@ -69,7 +75,7 @@ export class PlayerService {
     return this.http.post(`${this.baseUrl}/previous`, null, {params});
   }
 
-  play(body?: PlayRequestBody, device_id?: string) {
+  play(body: PlayRequestBody, device_id?: string) {
     const params = removeEmptyKey({device_id});
     return this.http.put(`${this.baseUrl}/play`, body, {params});
   }
@@ -81,6 +87,20 @@ export class PlayerService {
 
   transfer(device_ids: string[], play?: boolean) {
     return this.http.put(this.baseUrl, {device_ids, play});
+  }
+
+  executePlay(context: PlayContext, deviceId?: () => string | undefined, offset: number | TrackSimplified = 0, position: number = 0) {
+    const body: PlayRequestBody = Array.isArray(context) ?
+      {uris: context.map(t => t.uri)} :
+      {context_uri: context.uri};
+    body.offset = offset.hasOwnProperty('uri') ?
+      {uri: (offset as TrackSimplified).uri} :
+      {position: offset as number};
+    body.position_ms = position;
+
+    return this.play(body).pipe(
+      catchError(_ => deviceId && deviceId() ? this.play(body, deviceId()) : EMPTY),
+    );
   }
 
 }

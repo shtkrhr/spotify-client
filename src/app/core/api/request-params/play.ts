@@ -1,6 +1,6 @@
 export interface PlayRequestBody {
   context_uri?: string;
-  uris?: string;
+  uris?: string[];
   offset?: {
     position?: number;
     uri?: string;

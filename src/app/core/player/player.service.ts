@@ -11,11 +11,15 @@ export class PlayerService {
   get isSdkReady() {
     return this._isSdkReady;
   }
+  get isReady() {
+    return this._isReady;
+  }
   get deviceId() {
     return this._deviceId;
   }
 
   private _isSdkReady = false;
+  private _isReady = false;
   private _deviceId?: string;
   private player?: Player;
 
@@ -32,9 +36,13 @@ export class PlayerService {
   private eventListeners = {
     ready: (res) => {
       this._deviceId = res.device_id;
+      this._isReady = true;
       this._ready$.next(res);
     },
-    not_ready: this._notReady$.next.bind(this._notReady$),
+    not_ready: (res) => {
+      this._isReady = false;
+      this._notReady$.next(res);
+    },
     player_state_changed: this._playerStateChanged$.next.bind(this._playerStateChanged$),
     initialization_error: this._initializationError$.next.bind(this._initializationError$),
     authentication_error: this._authenticationError$.next.bind(this._authenticationError$),

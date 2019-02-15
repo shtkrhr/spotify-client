@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Params } from '@angular/router';
-import { BehaviorSubject, Observable, of, ReplaySubject, throwError } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { ArtistService } from './artist.service';
-import { isValidSearchParams, SearchParams, toSearchRequestParams } from './method-params/search';
-import { SearchResult } from './responses/search-result';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { getAccessToken, onLogOut } from '../auth/auth';
 import { InMemoryCache } from '../cache/in-memory-cache';
 import { SavedTrack } from './responses/track';

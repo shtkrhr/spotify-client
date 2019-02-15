@@ -18,7 +18,7 @@ export interface AlbumSimplified extends AlbumBase {
   album_group: 'album' | 'single' | 'compilation' | 'appears_on';
 }
 
-interface AlbumBase {
+export interface AlbumBase {
   id: string;
   name: string;
   href: string;

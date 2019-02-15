@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 export const removeEmptyKey = (object: any) => {
   Object.keys(object).forEach(k => {
     if (object[k] === undefined || object[k] === null) {
@@ -19,3 +21,12 @@ export const msToHHMMSS = (ms: number) => {
     date.toISOString().substr(11, 8) :
     date.toISOString().substr(14, 5);
 };
+
+export const isString = (v: any): v is string => {
+  return typeof v === 'string' || v instanceof String;
+};
+
+const windowResizeEvent = new Subject<Event>();
+window.addEventListener('resize', windowResizeEvent.next.bind(windowResizeEvent));
+
+export const onResize = () => windowResizeEvent.asObservable();
