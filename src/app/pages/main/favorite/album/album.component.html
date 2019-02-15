@@ -1,7 +1,5 @@
-<ul *ngIf="groups$ && groups$ | async as groups">
-  <li *ngFor="let group of groups">
-    <a [routerLink]="['/album', group.album.id]">
-      {{group.album.name}} ({{group.tracks.length | number}})
-    </a>
-  </li>
-</ul>
+<sp-thumbnail-group gutter="narrow" [maxColumnWidth]="180" *ngIf="groups$ && groups$ | async as groups">
+  <sp-thumbnail *ngFor="let group of groups">
+    <a sp-album-thumbnail [routerLink]="['/album', group.album.id]" [album]="group.album"></a>
+  </sp-thumbnail>
+</sp-thumbnail-group>

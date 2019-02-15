@@ -28,7 +28,8 @@ export class TrackComponent implements OnInit {
     return (this.tracks && this.tracks.total) * 1 === 0;
   }
 
-  constructor(private route: ActivatedRoute, private page: SearchService) {}
+  constructor(private route: ActivatedRoute,
+              private page: SearchService) {}
 
   ngOnInit() {
     this.page.pathType = 'track';

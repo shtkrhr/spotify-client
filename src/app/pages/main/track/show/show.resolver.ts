@@ -29,9 +29,9 @@ export class ShowResolver implements Resolve<ShowResolvedData> {
       return handleError();
     }
 
-    return combineLatest<Track, AudioFeatures>(
+    return combineLatest<Track, AudioFeatures[]>(
       this.trackApi.show(trackId).pipe(catchError(handleError)),
       this.trackApi.features(trackId).pipe(catchError(handleError)),
-    ).pipe(map(([track, features]) => ({track, features})));
+    ).pipe(map(([track, list]) => ({track, features: list[0]})));
   }
 }

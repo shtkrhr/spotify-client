@@ -8,6 +8,7 @@ import { ArtistComponent } from './artist/artist.component';
 import { TrackComponent } from './track/track.component';
 import { AlbumComponent } from './album/album.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
+import { UiModule } from '../../../core/ui/ui.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AnalyticsComponent } from './analytics/analytics.component';
     CommonModule,
     MatProgressSpinnerModule,
     FavoriteRoutingModule,
+    UiModule,
   ]
 })
 export class FavoriteModule { }

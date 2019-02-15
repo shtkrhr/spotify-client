@@ -1,8 +1,11 @@
 <div *ngIf="artists?.total">
   <p>{{artists.total > 50 ? '50+' : artists.total}} artists</p>
-  <p *ngFor="let item of artists.items">
-    <a [routerLink]="['/artist', item.id]">{{item.name}}</a>
-  </p>
+
+  <sp-thumbnail-group gutter="narrow" [maxColumnWidth]="180">
+    <sp-thumbnail *ngFor="let item of artists.items">
+      <a sp-artist-thumbnail [routerLink]="['/artist', item.id]" [artist]="item"></a>
+    </sp-thumbnail>
+  </sp-thumbnail-group>
 </div>
 
 <div class="message no-result" *ngIf="noResult">

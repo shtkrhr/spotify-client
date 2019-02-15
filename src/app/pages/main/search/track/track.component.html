@@ -1,8 +1,10 @@
 <div *ngIf="tracks?.total">
   <p>{{tracks.total > 50 ? '50+' : tracks.total}} tracks</p>
-  <p *ngFor="let item of tracks.items">
-    <a [routerLink]="['/track', item.id]">{{item.name}}</a>
-  </p>
+  <sp-track-list
+    [tracks]="tracks.items"
+    [columns]="['image', 'play', 'name', 'artist', 'album', 'duration']"
+  ></sp-track-list>
+
 </div>
 
 <div class="message no-result" *ngIf="noResult">

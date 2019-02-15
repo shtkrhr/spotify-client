@@ -1,5 +1,4 @@
-<ul *ngIf="data && data.tracksCollection$ | async as collection">
-  <li *ngFor="let item of collection.items">
-    <a [routerLink]="['/track', item.track.id]">{{item.track.name}}</a>
-  </li>
-</ul>
+<sp-track-list *ngIf="data && data.tracksCollection$ | async as collection"
+  [tracks]="collection.items"
+  [columns]="['image', 'play', 'name', 'artist', 'album', 'duration']"
+></sp-track-list>

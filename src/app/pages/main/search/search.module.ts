@@ -18,6 +18,7 @@ import { AlbumComponent } from './album/album.component';
 import { TrackComponent } from './track/track.component';
 import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchService } from './search.service';
+import { UiModule } from '../../../core/ui/ui.module';
 
 // @todo: 結果表示のレイアウト
 // @todo: 諸々のコンポーネント
@@ -44,6 +45,7 @@ import { SearchService } from './search.service';
     MatIconModule,
     MatSelectModule,
     MatSlideToggleModule,
+    UiModule,
   ],
   providers: [
     SearchService,

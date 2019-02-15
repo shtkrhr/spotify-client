@@ -22,7 +22,10 @@ export class MainComponent implements OnInit {
               private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    onLogOut().subscribe(_ => this.router.navigate(['/auth/login']));
+    onLogOut().subscribe(_ => {
+      this.router.navigate(['/auth/login']);
+      this.playerSdk.disconnect();
+    });
 
     this.playerSdk.sdkReady$().subscribe(_ => {
       this.playerSdk.connect('sample', getAccessToken).subscribe();
