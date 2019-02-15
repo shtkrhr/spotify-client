@@ -15,10 +15,6 @@ $side-nav-width: 300px;
 
 .content {
   padding-left: $side-nav-width;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .artist-image {
@@ -33,6 +29,14 @@ $side-nav-width: 300px;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
+
+  [mat-list-item] {
+    font-weight: 600;
+    &.active {
+      background: black;
+      color: white;
+    }
+  }
 }
 
 .genres {

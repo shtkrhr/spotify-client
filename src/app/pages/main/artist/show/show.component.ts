@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReplaySubject } from 'rxjs';
 import { ShowResolvedData } from './show.resolver';
 import { ArtistService } from '../../../../core/api/artist.service';
-import { Artist } from '../../../../core/api/responses/artist';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sp-artist-show',
@@ -13,22 +10,12 @@ import { map } from 'rxjs/operators';
 })
 export class ShowComponent implements OnInit {
 
-  readonly data$ = new ReplaySubject<ShowResolvedData>(1);
+  data?: ShowResolvedData;
 
-  readonly extarnals$ = this.data$.pipe(map(data => {
-    return Object.keys(data.artist.external_urls).map(title => ({title, url: data.artist.external_urls[title]}));
-  }));
-
-  constructor(private route: ActivatedRoute, private artistApi: ArtistService, private router: Router) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.data$.next(data.data);
-    });
-  }
-
-  onArtistClick(artist: Artist) {
-    this.router.navigate(['/artist', artist.id]);
+    this.route.data.subscribe(data => this.data = data.data);
   }
 
 }

@@ -1,0 +1,14 @@
+<h2>Top Tracks</h2>
+
+<sp-track-list
+  *ngIf="data"
+  [tracks]="data.topTracks"
+  [columns]="['image','index','play','name','album','duration']"
+></sp-track-list>
+
+<h2>Albums</h2>
+<sp-thumbnail-group *ngIf="data && (data.albums$ | async) as albums" [maxColumnWidth]="180" gutter="narrow">
+  <sp-thumbnail *ngFor="let album of albums.items">
+    <a sp-album-thumbnail [album]="album" [routerLink]="['/album', album.id]"></a>
+  </sp-thumbnail>
+</sp-thumbnail-group>
