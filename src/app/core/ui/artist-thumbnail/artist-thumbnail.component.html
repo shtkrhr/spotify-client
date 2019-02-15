@@ -1,0 +1,4 @@
+<div class="image-container">
+  <img *ngIf="artist.images && artist.images[0]" [src]="artist.images[0]?.url">
+</div>
+<p class="name">{{artist.name}}</p>

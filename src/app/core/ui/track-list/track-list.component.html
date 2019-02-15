@@ -1,0 +1,58 @@
+<table mat-table [dataSource]="displayedTracks">
+
+  <ng-container matColumnDef="image">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let track">
+      <img class="track-image" *ngIf="track.album?.images[0]?.url" [src]="track.album?.images[0]?.url">
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="index">
+    <th mat-header-cell *matHeaderCellDef>#</th>
+    <td mat-cell *matCellDef="let track; let i = index">{{i + 1 | number}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="play">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let track">
+      <a sp-player-action (click)="play(track)" role="button">play_arrow</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fav">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let track"></td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let track">
+      <a class="name-link" [routerLink]="['/track', track.id]">{{track.name}}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="artist">
+    <th mat-header-cell *matHeaderCellDef>Artist</th>
+    <td mat-cell *matCellDef="let track">
+      <ng-container *ngFor="let artist of track.artists; let last = last">
+        <a class="name-link" [routerLink]="['/artist', artist.id]">{{artist.name}}</a>
+        <span *ngIf="!last">,</span>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="album">
+    <th mat-header-cell *matHeaderCellDef>Album</th>
+    <td mat-cell *matCellDef="let track">
+      <a *ngIf="track.album" class="name-link" [routerLink]="['/album', track.album.id]">{{track.album?.name}}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="duration">
+    <th mat-header-cell *matHeaderCellDef>Duration</th>
+    <td mat-cell *matCellDef="let track">{{durationString(track)}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+</table>

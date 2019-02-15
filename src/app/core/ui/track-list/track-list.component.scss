@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+table {
+  width: 100%;
+}
+
+.track-image {
+  max-width: 50px;
+}
+
+.name-link {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+[sp-player-action] {
+  border: 1px solid black;
+}
