@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   clientId: '05478059b83d4a38b0dfcf6bcd8061fd',
+  rootUrl: 'http://localhost:4200',
 };
 
 /*
