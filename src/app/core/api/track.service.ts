@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { chunk, isString, flatten } from 'lodash';
 import { InMemoryCache } from '../cache/in-memory-cache';
 import { Track } from './responses/track';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { combineLatest, Observable, of } from 'rxjs';
 import { AudioFeatures } from './responses/audio-features';
-import { isString } from '../util/util';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +29,9 @@ export class TrackService {
   }
 
   features(...ids: string[]): Observable<AudioFeatures[]> {
+    if (ids.length === 0) {
+      return of([]);
+    }
     const observables = ids.map(id => {
       return this.featuresCache.get(id).pipe(catchError(_ => of(id)));
     });
@@ -39,13 +42,20 @@ export class TrackService {
         if (idsToFetch.length === 0) {
           return of(list as AudioFeatures[]);
         }
+
         const featuresList = list.filter(v => !isString(v)) as AudioFeatures[];
-        const params = {ids: idsToFetch.join(',')};
-        return this.http.get<{audio_features: AudioFeatures[]}>(`${this.baseUrl}/audio-features`, {params})
-          .pipe(
-            tap(res => res.audio_features.forEach(f => this.featuresCache.set(f.id, f))),
-            map(res => featuresList.concat(res.audio_features))
-          );
+        const idsList = chunk(idsToFetch, 100);
+        const fetchObservables = idsList.map(_ids => {
+          const params = {ids: _ids.join(',')};
+          return this.http.get<{audio_features: AudioFeatures[]}>(`${this.baseUrl}/audio-features`, {params})
+            .pipe(map(res => res.audio_features));
+        });
+
+        return combineLatest(fetchObservables).pipe(
+          map<AudioFeatures[][], AudioFeatures[]>(flatten),
+          tap(items => items.forEach(f => this.featuresCache.set(f.id, f))),
+          map(items => featuresList.concat(items)),
+        );
       })
     );
   }
