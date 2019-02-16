@@ -5,14 +5,13 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { logOut } from '../../auth/auth';
+import { isSpotifyApi } from './util';
 
 @Injectable()
 export class LogOutIfUnauthorizedInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const isSpotifyApi = req.url.indexOf('https://api.spotify.com') > -1;
-
-    if (!isSpotifyApi) {
+    if (!isSpotifyApi(req)) {
       return next.handle(req);
     }
 
