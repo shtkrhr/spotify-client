@@ -20,6 +20,8 @@ interface SelectedFeatureValues {
   };
 }
 
+// @todo: genreグラフ
+
 @Component({
   selector: 'sp-favorite-analytics',
   templateUrl: './analytics.component.html',

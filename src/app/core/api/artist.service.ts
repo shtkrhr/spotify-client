@@ -64,6 +64,7 @@ export class ArtistService {
     }));
   }
 
+  // @todo: cancel可能にする
   allAlbums(id: string): Observable<PagingCollection<AlbumSimplified>> {
     const subject = new ReplaySubject<PagingCollection<AlbumSimplified>>(1);
     const limit = 50;

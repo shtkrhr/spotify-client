@@ -39,6 +39,7 @@ export class AlbumService {
     }));
   }
 
+  // @todo: cancel可能にする
   allTracks(id: string): Observable<PagingCollection<TrackSimplified>> {
     const subject = new ReplaySubject<PagingCollection<TrackSimplified>>(1);
     const limit = 50;

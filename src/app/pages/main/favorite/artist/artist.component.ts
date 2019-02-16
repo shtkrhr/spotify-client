@@ -11,6 +11,8 @@ interface ArtistGroup {
   tracks: Track[];
 }
 
+// @todo: 画像
+
 @Component({
   selector: 'sp-favorite-artist',
   templateUrl: './artist.component.html',

@@ -25,6 +25,11 @@ const MARGIN = {
   left: 70,
 };
 
+// @todo: zoom
+// @todo: area select
+// @todo: highlightを上に
+// @todo: tempoをround
+
 @Component({
   selector: 'sp-features-chart',
   templateUrl: './features-chart.component.html',

@@ -10,6 +10,8 @@ import { AlbumComponent } from './album/album.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { UiModule } from '../../../core/ui/ui.module';
 
+// @todo: filter, sort
+
 @NgModule({
   declarations: [
     FavoriteComponent,

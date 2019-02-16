@@ -11,6 +11,9 @@ type Context = AlbumBase | ArtistSimplified | PlaylistBase | TrackSimplified[];
 
 type TrackListColumn = 'image' | 'index' | 'play' | 'fav' | 'name' | 'artist' | 'album' | 'duration';
 
+// @todo: style
+// @todo: SavedTrack, PlaylistTrack対応
+
 @Component({
   selector: 'sp-track-list',
   templateUrl: './track-list.component.html',
