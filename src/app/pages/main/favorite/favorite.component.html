@@ -1,13 +1,7 @@
-<nav class="type-nav">
-  <a class="type-nav__item" routerLink="./artist" routerLinkActive="active">Artist</a>
-  <a class="type-nav__item" routerLink="./album" routerLinkActive="active">Album</a>
-  <a class="type-nav__item" routerLink="./track" routerLinkActive="active">Track</a>
-  <a class="type-nav__item" routerLink="./analytics" routerLinkActive="active">Analytics</a>
-</nav>
 <p class="progress" *ngIf="data && data.tracksCollection$ | async as collection">
   <mat-spinner *ngIf="!collection.completed" [strokeWidth]="3" [diameter]="20"></mat-spinner>
   <span>{{collection.items.length | number}} / {{collection.total | number}} Tracks</span>
 </p>
-<div class="child">
+<div class="content">
   <router-outlet></router-outlet>
 </div>
