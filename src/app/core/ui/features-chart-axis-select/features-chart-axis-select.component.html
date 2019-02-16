@@ -1,0 +1,10 @@
+<mat-form-field>
+  <mat-select name="xAxis" [(ngModel)]="xAxisType" placeholder="X axis" (ngModelChange)="onAxisChange()">
+    <mat-option *ngFor="let type of allAxisTypes" [value]="type">{{type}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-select name="yAxis" [(ngModel)]="yAxisType" placeholder="Y axis" (ngModelChange)="onAxisChange()">
+    <mat-option *ngFor="let type of allAxisTypes" [value]="type">{{type}}</mat-option>
+  </mat-select>
+</mat-form-field>

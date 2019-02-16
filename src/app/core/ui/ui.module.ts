@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatIconModule, MatTableModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatSelectModule, MatTableModule } from '@angular/material';
 import { ArtistRelationDiagramComponent } from './artist-relation-diagram/artist-relation-diagram.component';
 import { PlayerComponent } from './player/player.component';
 import { TrackInfoComponent } from './player/track-info/track-info.component';
@@ -14,6 +14,8 @@ import { ThumbnailComponent } from './thumbnail/thumbnail.component';
 import { ThumbnailGroupComponent } from './thumbnail-group/thumbnail-group.component';
 import { RouterModule } from '@angular/router';
 import { FeaturesChartComponent } from './features-chart/features-chart.component';
+import { FeaturesChartAxisSelectComponent } from './features-chart-axis-select/features-chart-axis-select.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,13 +32,17 @@ import { FeaturesChartComponent } from './features-chart/features-chart.componen
     ThumbnailComponent,
     ThumbnailGroupComponent,
     FeaturesChartComponent,
+    FeaturesChartAxisSelectComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     MatButtonModule,
     MatIconModule,
     MatTableModule,
+    MatSelectModule,
+    MatFormFieldModule,
   ],
   exports: [
     ArtistRelationDiagramComponent,
@@ -48,6 +54,7 @@ import { FeaturesChartComponent } from './features-chart/features-chart.componen
     ThumbnailComponent,
     ThumbnailGroupComponent,
     FeaturesChartComponent,
+    FeaturesChartAxisSelectComponent,
   ],
 })
 export class UiModule {}
