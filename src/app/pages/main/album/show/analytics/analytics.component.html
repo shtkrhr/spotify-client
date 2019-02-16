@@ -1,15 +1,8 @@
-<div class="axis-selects">
-  <mat-form-field>
-    <mat-select name="xAxis" [(ngModel)]="xAxisType" placeholder="X axis" (ngModelChange)="onAxisChange()">
-      <mat-option *ngFor="let type of allAxisTypes" [value]="type">{{type}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select name="yAxis" [(ngModel)]="yAxisType" placeholder="Y axis" (ngModelChange)="onAxisChange()">
-      <mat-option *ngFor="let type of allAxisTypes" [value]="type">{{type}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+<sp-features-chart-axis-select
+  [xAxisType]="xAxisType"
+  [yAxisType]="yAxisType"
+  (axisChange)="onAxisChange($event)"
+></sp-features-chart-axis-select>
 <sp-features-chart
   *ngIf="data"
   [featuresList]="data.featuresList$ | async"

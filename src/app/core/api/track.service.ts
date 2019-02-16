@@ -48,12 +48,14 @@ export class TrackService {
         const fetchObservables = idsList.map(_ids => {
           const params = {ids: _ids.join(',')};
           return this.http.get<{audio_features: AudioFeatures[]}>(`${this.baseUrl}/audio-features`, {params})
-            .pipe(map(res => res.audio_features));
+            .pipe(
+              map(res => res.audio_features),
+              tap(items => items.forEach(f => this.featuresCache.set(f.id, f))),
+            );
         });
 
         return combineLatest(fetchObservables).pipe(
           map<AudioFeatures[][], AudioFeatures[]>(flatten),
-          tap(items => items.forEach(f => this.featuresCache.set(f.id, f))),
           map(items => featuresList.concat(items)),
         );
       })

@@ -6,6 +6,7 @@ import { AnalyticsComponent } from './analytics/analytics.component';
 import { TrackComponent } from './track/track.component';
 import { AlbumComponent } from './album/album.component';
 import { ArtistComponent } from './artist/artist.component';
+import { AnalyticsResolver } from './analytics/analytics.resolver';
 
 const routes: Routes = [
   {
@@ -30,6 +31,9 @@ const routes: Routes = [
       {
         path: 'analytics',
         component: AnalyticsComponent,
+        resolve: {
+          data: AnalyticsResolver,
+        },
       },
       {
         path: '**',
@@ -42,6 +46,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [FavoriteResolver],
+  providers: [FavoriteResolver, AnalyticsResolver],
 })
-export class FavoriteRoutingModule { }
+export class FavoriteRoutingModule {}
