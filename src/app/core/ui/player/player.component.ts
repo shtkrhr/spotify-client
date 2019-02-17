@@ -5,6 +5,8 @@ import { RepearMode } from '../../player/player';
 import { RepeatState } from '../../api/responses/playing-context';
 import { filter, map, switchMap } from 'rxjs/operators';
 
+// @todo: activeでないときのcontext更新
+
 @Component({
   selector: 'sp-player',
   templateUrl: './player.component.html',

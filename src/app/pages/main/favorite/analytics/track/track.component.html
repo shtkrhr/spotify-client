@@ -1,0 +1,32 @@
+<sp-features-chart-axis-select
+  [xAxisType]="xAxisType"
+  [yAxisType]="yAxisType"
+  (axisChange)="onAxisChange($event)"
+></sp-features-chart-axis-select>
+<sp-features-chart
+  *ngIf="data"
+  [xAxisType]="xAxisType"
+  [yAxisType]="yAxisType"
+  [featuresList]="data.featuresList$ | async"
+  (dataSelect)="onSelect($event)"
+></sp-features-chart>
+
+<div class="selected-feature-values" *ngIf="selectedFeatureValues$ | async as values">
+  <p>
+    X - <span>{{values.x.name}}:</span> {{values.x.value}}
+  </p>
+  <p>
+    Y - <span>{{values.y.name}}:</span> {{values.y.value}}
+  </p>
+</div>
+
+<ng-container *ngIf="selectedTracks$ | async as tracks">
+  <sp-track-list
+    [tracks]="tracks"
+    [columns]="['image','play','name','artist','album']"
+  ></sp-track-list>
+</ng-container>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

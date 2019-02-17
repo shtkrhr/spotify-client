@@ -20,8 +20,8 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SearchService } from './search.service';
 import { UiModule } from '../../../core/ui/ui.module';
 
-// @todo: 結果表示のレイアウト
-// @todo: 諸々のコンポーネント
+// @todo: /overviewのレイアウト
+// @todo: playlist一覧のコンポーネント
 
 @NgModule({
   declarations: [

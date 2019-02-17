@@ -38,6 +38,7 @@ export class LibraryService {
     }));
   }
 
+  // @todo: cancel可能にする
   allTracks(): Observable<PagingCollection<SavedTrack>> {
     const subject = new ReplaySubject<PagingCollection<SavedTrack>>(1);
     const limit = 50;

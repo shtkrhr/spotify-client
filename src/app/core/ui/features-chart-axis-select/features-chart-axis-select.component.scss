@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-form-field {
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}

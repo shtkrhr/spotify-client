@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+.toggle-button {
+  display: flex;
+  padding: 10px 0;
+
+  > * {
+    flex: 1 0 0%;
+  }
+}

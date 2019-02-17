@@ -6,11 +6,8 @@ import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { Track } from '../../../../../core/api/responses/track';
 import { TrackService } from '../../../../../core/api/track.service';
 import { catchError } from 'rxjs/operators';
-import {
-  allFeaturesChartAxisTypes,
-  configForFeaturesAxis,
-  FeaturesChartAxisType,
-} from '../../../../../core/ui/features-chart/features-chart-axis-type';
+import { configForFeaturesAxis, FeaturesChartAxisType } from '../../../../../core/ui/features-chart/features-chart-axis-type';
+import { FeaturesChartAxisSelectChangeEvent } from '../../../../../core/ui/features-chart-axis-select/features-chart-axis-select.component';
 
 interface SelectedFeatureValues {
   x: {
@@ -34,8 +31,6 @@ export class AnalyticsComponent implements OnInit {
 
   xAxisType = FeaturesChartAxisType.Duration;
   yAxisType = FeaturesChartAxisType.Loudness;
-
-  readonly allAxisTypes = allFeaturesChartAxisTypes();
 
   readonly selectedTracks$ = new BehaviorSubject<Track[] | undefined>(undefined);
 
@@ -78,7 +73,9 @@ export class AnalyticsComponent implements OnInit {
     });
   }
 
-  onAxisChange() {
+  onAxisChange(event: FeaturesChartAxisSelectChangeEvent) {
+    this.xAxisType = event.x;
+    this.yAxisType = event.y;
     this.selectedTracks$.next(undefined);
     this.selectedFeatureValues$.next(undefined);
   }

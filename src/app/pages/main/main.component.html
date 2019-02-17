@@ -4,7 +4,10 @@
 <sp-player (nav)="nav($event)"></sp-player>
 <nav class="side-nav">
   <mat-nav-list>
-    <a mat-list-item routerLink="/favorite" routerLinkActive="active">Favorite</a>
+    <a mat-list-item routerLink="/favorite/artist" routerLinkActive="active">Artist</a>
+    <a mat-list-item routerLink="/favorite/album" routerLinkActive="active">Album</a>
+    <a mat-list-item routerLink="/favorite/track" routerLinkActive="active">Track</a>
+    <a mat-list-item routerLink="/favorite/analytics" routerLinkActive="active">Analytics</a>
     <a mat-list-item routerLink="/search" routerLinkActive="active">Search</a>
   </mat-nav-list>
 

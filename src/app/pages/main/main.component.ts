@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
     });
 
     this.playerSdk.sdkReady$().subscribe(_ => {
-      this.playerSdk.connect('sample', getAccessToken).subscribe();
+      this.playerSdk.connect('Spotify Client', getAccessToken).subscribe();
     });
 
     merge<[string, any]>(...[

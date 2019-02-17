@@ -3,15 +3,15 @@ import { HttpRequest } from '@angular/common/http';
 import { HttpHandler } from '@angular/common/http';
 import { getAccessToken } from '../../auth/auth';
 import { Injectable } from '@angular/core';
+import { isSpotifyApi } from './util';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const isSpotifyApi = req.url.indexOf('https://api.spotify.com') > -1;
     const accessToken = getAccessToken();
 
-    if (isSpotifyApi && accessToken) {
+    if (isSpotifyApi(req) && accessToken) {
       const headers = req.headers.set('Authorization', `Bearer ${accessToken}`);
       return next.handle(req.clone({headers}));
     }

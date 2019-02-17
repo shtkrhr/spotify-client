@@ -25,8 +25,7 @@ import { httpInterceptorProviders } from './core/api/interseptors/interceptor-pr
 export class AppModule { }
 
 // @todo: oauthのstate
-// @todo: player
-// @todo: artist/:id/overview
-// @todo: /track
-// @todo: /album
 // @todo: /playlist (ownerでfilter)
+// @todo: /dashboard
+// @todo: recommendによるsearch
+
