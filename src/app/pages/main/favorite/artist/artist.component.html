@@ -1,4 +1,4 @@
-<sp-thumbnail-group gutter="narrow" [maxColumnWidth]="180" *ngIf="groups$ && groups$ | async as groups">
+<sp-thumbnail-group gutter="narrow" [maxColumnWidth]="180" *ngIf="data && data.artistGroups$ | async as groups">
   <sp-thumbnail *ngFor="let group of groups">
     <a sp-artist-thumbnail [routerLink]="['/artist', group.artist.id]" [artist]="group.artist"></a>
   </sp-thumbnail>

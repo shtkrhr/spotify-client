@@ -10,6 +10,7 @@ import { GenreComponent } from './analytics/genre/genre.component';
 import { TrackComponent as AnalyticsTrackComponent } from './analytics/track/track.component';
 import { TrackResolver } from './analytics/track/track.resolver';
 import { GenreResolver } from './analytics/genre/genre.resolver';
+import { ArtistResolver } from './artist/artist.resolver';
 
 const routes: Routes = [
   {
@@ -22,6 +23,9 @@ const routes: Routes = [
       {
         path: 'artist',
         component: ArtistComponent,
+        resolve: {
+          data: ArtistResolver,
+        },
       },
       {
         path: 'album',
@@ -71,6 +75,7 @@ const routes: Routes = [
     FavoriteResolver,
     TrackResolver,
     GenreResolver,
+    ArtistResolver,
   ],
 })
 export class FavoriteRoutingModule {}
