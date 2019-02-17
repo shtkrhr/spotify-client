@@ -12,13 +12,13 @@ import {
 import * as d3 from 'd3';
 import { AudioFeatures, emptyCalculable, maxFeatures, minFeatures } from '../../api/responses/audio-features';
 import { configForFeaturesAxis, FeaturesChartAxisType } from './features-chart-axis-type';
-import { BehaviorSubject, ReplaySubject, Subject, timer } from 'rxjs';
+import { BehaviorSubject, Subject, timer } from 'rxjs';
 import { debounce, takeUntil } from 'rxjs/operators';
 import { onResize } from '../../util/util';
 
 export type D3Selection = d3.Selection<d3.BaseType, any, d3.BaseType, any>;
 
-const MARGIN = {
+const PADDING = {
   top: 0,
   right: 0,
   bottom: 40,
@@ -108,8 +108,8 @@ export class FeaturesChartComponent implements OnInit, OnChanges, OnDestroy {
     this.$yAxisMetaGroup = d3.select(this.yAxisMetaGroup.nativeElement);
 
     this.$chartArea
-      .style('transform', `translate(${MARGIN.left}px, 0)`)
-      .attr('transform', `translate(${MARGIN.left}, 0)`);
+      .style('transform', `translate(${PADDING.left}px, ${PADDING.top}px)`)
+      .attr('transform', `translate(${PADDING.left}, ${PADDING.top})`);
 
     this.selectedFeatures$.subscribe(featuresList => {
       this.dataSelectEvent.next(featuresList);
@@ -213,19 +213,19 @@ export class FeaturesChartComponent implements OnInit, OnChanges, OnDestroy {
   private updateLayout() {
     const clientWidth = this.host.nativeElement.clientWidth;
     const clientHeight = this.host.nativeElement.clientHeight;
-    const chartWidth = clientWidth - MARGIN.left - MARGIN.right;
-    const chartHeight = clientHeight - MARGIN.top - MARGIN.bottom;
+    const chartWidth = clientWidth - PADDING.left - PADDING.right;
+    const chartHeight = clientHeight - PADDING.top - PADDING.bottom;
 
     this.xScale.range([0, chartWidth] as ReadonlyArray<number>);
     this.yScale.range([chartHeight, 0] as ReadonlyArray<number>);
 
     this.$xAxisMetaGroup
-      .style('transform', `translate(${MARGIN.left + (chartWidth / 2)}px, ${clientHeight}px)`)
-      .attr('transform', `translate(${MARGIN.left + (chartWidth / 2)}, ${clientHeight})`);
+      .style('transform', `translate(${PADDING.left + (chartWidth / 2)}px, ${clientHeight}px)`)
+      .attr('transform', `translate(${PADDING.left + (chartWidth / 2)}, ${clientHeight})`);
 
     this.$yAxisMetaGroup
-      .style('transform', `translate(7px, ${MARGIN.top + (chartHeight / 2)}px) rotate(90deg)`)
-      .attr('transform', `translate(7, ${MARGIN.top + (chartHeight / 2)}) rotate(90)`);
+      .style('transform', `translate(7px, ${PADDING.top + (chartHeight / 2)}px) rotate(90deg)`)
+      .attr('transform', `translate(7, ${PADDING.top + (chartHeight / 2)}) rotate(90)`);
 
     this.$xAxisGroup
       .style('transform', `translate(0, ${chartHeight}px)`)

@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { FeaturesChartComponent } from './features-chart/features-chart.component';
 import { FeaturesChartAxisSelectComponent } from './features-chart-axis-select/features-chart-axis-select.component';
 import { FormsModule } from '@angular/forms';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     ThumbnailGroupComponent,
     FeaturesChartComponent,
     FeaturesChartAxisSelectComponent,
+    BarChartComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { FormsModule } from '@angular/forms';
     ThumbnailGroupComponent,
     FeaturesChartComponent,
     FeaturesChartAxisSelectComponent,
+    BarChartComponent,
   ],
 })
 export class UiModule {}
