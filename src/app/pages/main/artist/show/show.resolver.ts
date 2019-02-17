@@ -27,9 +27,14 @@ export class ShowResolver implements Resolve<ShowResolvedData> {
       return handleError();
     }
 
-    return this.artistApi.show(artistId).pipe(
+    return this.artistApi.get(artistId).pipe(
+      map(artists => {
+        if (artists.length === 0) {
+          throw Error;
+        }
+        return {artist: artists[0]};
+      }),
       catchError(handleError),
-      map(artist => ({artist})),
     );
   }
 }

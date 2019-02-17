@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject } from 'rxjs';
+import { combineLatest, Observable, of, ReplaySubject } from 'rxjs';
 import { Artist } from './responses/artist';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { InMemoryCache } from '../cache/in-memory-cache';
@@ -8,7 +8,8 @@ import { Paging } from './responses/paging';
 import { Params } from '@angular/router';
 import { AlbumSimplified } from './responses/album';
 import { PagingCollection } from './responses/paging-collection';
-import { Track, TrackSimplified } from './responses/track';
+import { Track } from './responses/track';
+import { chunk, flatten, isString } from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -27,11 +28,37 @@ export class ArtistService {
 
   constructor(private http: HttpClient) {}
 
-  show(id: string): Observable<Artist> {
-    return this.artistCache.get(id).pipe(catchError(_ => {
-      return this.http.get<Artist>(`${this.baseUrl}/${id}`)
-        .pipe(tap(this.cacheArtist.bind(this)));
-    }));
+  get(...ids: string[]): Observable<Artist[]> {
+    if (ids.length === 0) {
+      return of([]);
+    }
+    const observables = ids.map(id => {
+      return this.artistCache.get(id).pipe(catchError(_ => of(id)));
+    });
+    return combineLatest(observables).pipe(
+      switchMap(list => {
+        const idsToFetch = list.filter<string>(isString);
+        if (idsToFetch.length === 0) {
+          return of(list as Artist[]);
+        }
+
+        const artists = list.filter(v => !isString(v)) as Artist[];
+        const idsList = chunk(idsToFetch, 50);
+        const fetchObservables = idsList.map(_ids => {
+          const params = {ids: _ids.join(',')};
+          return this.http.get<{artists: Artist[]}>(this.baseUrl, {params})
+            .pipe(
+              map(res => res.artists),
+              tap(items => items.forEach(a => this.artistCache.set(a.id, a))),
+            );
+        });
+
+        return combineLatest(fetchObservables).pipe(
+          map<Artist[][], Artist[]>(flatten),
+          map(items => artists.concat(items)),
+        );
+      })
+    );
   }
 
   relatedArtists(id: string): Observable<Artist[]> {
