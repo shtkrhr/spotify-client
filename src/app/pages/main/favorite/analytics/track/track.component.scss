@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.selected-feature-values {
+  padding-left: 70px;
+
+  span {
+    display: inline-block;
+    width: 8.5em;
+  }
+}

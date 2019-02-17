@@ -1,25 +1,25 @@
 import { Resolve, ActivatedRouteSnapshot, Router, NavigationStart } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AsyncSubject, Observable } from 'rxjs';
-import { PagingCollection } from '../../../../core/api/responses/paging-collection';
-import { SavedTrack } from '../../../../core/api/responses/track';
-import { AudioFeatures } from '../../../../core/api/responses/audio-features';
-import { TrackService } from '../../../../core/api/track.service';
-import { FavoriteResolvedData } from '../favorite.resolver';
+import { PagingCollection } from '../../../../../core/api/responses/paging-collection';
+import { SavedTrack } from '../../../../../core/api/responses/track';
+import { AudioFeatures } from '../../../../../core/api/responses/audio-features';
+import { TrackService } from '../../../../../core/api/track.service';
+import { FavoriteResolvedData } from '../../favorite.resolver';
 import { filter, takeUntil } from 'rxjs/operators';
 
-export interface AnalyticsResolvedData {
+export interface TrackResolvedData {
   tracksCollection$: Observable<PagingCollection<SavedTrack>>;
   featuresList$: Observable<AudioFeatures[]>;
 }
 
 @Injectable()
-export class AnalyticsResolver implements Resolve<AnalyticsResolvedData> {
+export class TrackResolver implements Resolve<TrackResolvedData> {
 
   constructor(private trackApi: TrackService, private router: Router) {}
 
   resolve(route: ActivatedRouteSnapshot) {
-    const tracksCollection$ = (route.parent.data.data as FavoriteResolvedData).tracksCollection$;
+    const tracksCollection$ = (route.parent.parent.data.data as FavoriteResolvedData).tracksCollection$;
     const featuresListSubject = new AsyncSubject<AudioFeatures[]>();
     const navigationStart$ = this.router.events.pipe(filter(e => e instanceof NavigationStart));
 

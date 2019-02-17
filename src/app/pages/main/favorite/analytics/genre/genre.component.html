@@ -1,0 +1,28 @@
+<ng-container *ngIf="data && data.chartData$ | async as chartData">
+  <div>
+    <sp-bar-chart
+      [data]="chartData"
+      [displayedCount]="displayedCount"
+      [showOthers]="false"
+      (datumClick)="onGenreClick($event)">
+    </sp-bar-chart>
+    <div class="toggle-button">
+      <a mat-flat-button (click)="toggleDisplayedCount()">{{displayedCount ? 'Show all' : 'Hide'}}</a>
+    </div>
+  </div>
+
+  <ng-container *ngIf="data.selectedGenre$ | async as genre">
+    <section *ngIf="data.genredArtists$ | async as artists">
+      <h2>
+        <a [routerLink]="['/search']" [queryParams]="{genres: genre}">{{genre.toUpperCase()}}</a>
+        <small>({{artists.length}})</small>
+      </h2>
+      <sp-thumbnail-group gutter="narrow" [maxColumnWidth]="180">
+        <sp-thumbnail *ngFor="let artist of artists">
+          <a sp-artist-thumbnail [routerLink]="['/artist', artist.id]" [artist]="artist"></a>
+        </sp-thumbnail>
+      </sp-thumbnail-group>
+    </section>
+  </ng-container>
+</ng-container>
+

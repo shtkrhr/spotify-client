@@ -6,7 +6,10 @@ import { AnalyticsComponent } from './analytics/analytics.component';
 import { TrackComponent } from './track/track.component';
 import { AlbumComponent } from './album/album.component';
 import { ArtistComponent } from './artist/artist.component';
-import { AnalyticsResolver } from './analytics/analytics.resolver';
+import { GenreComponent } from './analytics/genre/genre.component';
+import { TrackComponent as AnalyticsTrackComponent } from './analytics/track/track.component';
+import { TrackResolver } from './analytics/track/track.resolver';
+import { GenreResolver } from './analytics/genre/genre.resolver';
 
 const routes: Routes = [
   {
@@ -31,9 +34,27 @@ const routes: Routes = [
       {
         path: 'analytics',
         component: AnalyticsComponent,
-        resolve: {
-          data: AnalyticsResolver,
-        },
+        children: [
+          {
+            path: 'genre',
+            component: GenreComponent,
+            resolve: {
+              data: GenreResolver,
+            },
+            runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+          },
+          {
+            path: 'track',
+            component: AnalyticsTrackComponent,
+            resolve: {
+              data: TrackResolver,
+            },
+          },
+          {
+            path: '**',
+            redirectTo: 'genre',
+          },
+        ],
       },
       {
         path: '**',
@@ -46,6 +67,10 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [FavoriteResolver, AnalyticsResolver],
+  providers: [
+    FavoriteResolver,
+    TrackResolver,
+    GenreResolver,
+  ],
 })
 export class FavoriteRoutingModule {}
