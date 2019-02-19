@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { AsyncSubject, from, Observable, Subject } from 'rxjs';
+import { Injectable, NgZone } from '@angular/core';
+import { AsyncSubject, from, merge, Observable, Subject } from 'rxjs';
 import { Player, WebPlaybackError, WebPlaybackPlayer, WebPlaybackState } from './player';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { environment as env } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -50,21 +51,12 @@ export class PlayerService {
     playback_error: this._playbackError$.next.bind(this._playbackError$),
   };
 
-  constructor() {
-    window['onSpotifyWebPlaybackSDKReady'] = () => {
-      this._isSdkReady = true;
-      this._sdkReady$.next(true);
-      this._sdkReady$.complete();
-    };
+  constructor(private zone: NgZone) {
+    this.loadSdkScript();
 
-    const script = document.createElement('script') as HTMLScriptElement;
-    script.type = 'text/javascript';
-    script.src = 'https://sdk.scdn.co/spotify-player.js';
-    script.onerror = () => {
-      throw new Error('Failed to load player SDK script.');
-    };
-
-    document.getElementsByTagName('head')[0].appendChild(script);
+    if (!env.production) {
+      this.logSdkEvents();
+    }
   }
 
   sdkReady$() {
@@ -93,7 +85,6 @@ export class PlayerService {
   }
 
   connect(name: string, getAccessToken: () => string): Observable<boolean> {
-    this.disconnect();
     const params = {name, getOAuthToken: cb => cb(getAccessToken())};
     const player = new window['Spotify']['Player'](params) as Player;
 
@@ -185,6 +176,38 @@ export class PlayerService {
       throw new Error;
     }
     return from(this.player.nextTrack());
+  }
+
+  private loadSdkScript() {
+    window['onSpotifyWebPlaybackSDKReady'] = () => {
+      this.zone.run(() => {
+        this._isSdkReady = true;
+        this._sdkReady$.next(true);
+        this._sdkReady$.complete();
+      });
+    };
+
+    const script = document.createElement('script') as HTMLScriptElement;
+    script.type = 'text/javascript';
+    script.src = 'https://sdk.scdn.co/spotify-player.js';
+    script.onerror = () => {
+      throw new Error('Failed to load player SDK script.');
+    };
+
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  private logSdkEvents() {
+    merge<[string, any]>(...[
+      this.sdkReady$().pipe(map<any, [string, any]>(v => ['SDK READY', v])),
+      this.ready$().pipe(map<any, [string, any]>(v => ['READY', v])),
+      this.notReady$().pipe(map<any, [string, any]>(v => ['NOT READY', v])),
+      this.playerStateChanged$().pipe(map<any, [string, any]>(v => ['PLAYER STATE CHANGED', v])),
+      this.initializationError$().pipe(map<any, [string, any]>(v => ['INITIALIZATION ERROR', v])),
+      this.authenticationError$().pipe(map<any, [string, any]>(v => ['AUTHENTICATION ERROR', v])),
+      this.accountError$().pipe(map<any, [string, any]>(v => ['ACCOUNT ERROR', v])),
+      this.playbackError$().pipe(map<any, [string, any]>(v => ['PLAYBACK ERROR', v])),
+    ]).subscribe(([name, res]) => console.log(`PLAYER: ${name}`, res));
   }
 
 }

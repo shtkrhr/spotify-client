@@ -1,18 +1,24 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { PlayerService as PlayerSDK } from '../../player/player.service';
 import { PlayerService as PlayerApi } from '../../api/player.service';
 import { RepearMode } from '../../player/player';
 import { RepeatState } from '../../api/responses/playing-context';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { getAccessToken } from '../../auth/auth';
+import { environment as env } from '../../../../environments/environment';
 
 // @todo: activeでないときのcontext更新
+
+const PLAYER_INSTANCES = new Set<PlayerComponent>();
+
+const PLAYER_NAME = 'Spotify Client';
 
 @Component({
   selector: 'sp-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
 
   @Output('nav')
   navEvent = new EventEmitter<string[]>();
@@ -22,9 +28,23 @@ export class PlayerComponent implements OnInit {
   readonly repeatMode = RepearMode;
 
   constructor(readonly playerSdk: PlayerSDK,
-              private playerApi: PlayerApi) { }
+              private playerApi: PlayerApi) {
+  }
 
   ngOnInit() {
+    if (PLAYER_INSTANCES.size === 0) {
+      this.playerSdk.sdkReady$().subscribe(() => {
+        this.playerSdk.connect(env.production ? PLAYER_NAME : `${PLAYER_NAME} Dev`, getAccessToken).subscribe();
+      });
+    }
+    PLAYER_INSTANCES.add(this);
+  }
+
+  ngOnDestroy() {
+    PLAYER_INSTANCES.delete(this);
+    if (PLAYER_INSTANCES.size === 0) {
+      this.playerSdk.disconnect();
+    }
   }
 
   activate() {
