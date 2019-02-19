@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef, HostListener,
   Input,
@@ -11,9 +10,12 @@ import {
 } from '@angular/core';
 import { msToHHMMSS } from '../../../util/util';
 import { WebPlaybackState } from '../../../player/player';
-import { interval, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { repeat, takeUntil } from 'rxjs/operators';
 import { PlayerService } from '../../../player/player.service';
+import { animationFrame } from '../../../../../../node_modules/rxjs/internal/scheduler/animationFrame';
+
+const UNKNOWN_TIME_STRING = '--:--';
 
 @Component({
   selector: 'sp-player-seek-bar',
@@ -32,35 +34,22 @@ export class SeekBarComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('progress')
   private progress: ElementRef;
 
+  @ViewChild('currentTime')
+  private currentTime: ElementRef;
+
   get totalTimeString() {
     return this.state ?
       msToHHMMSS(this.state.duration) :
-      '--:--';
+      UNKNOWN_TIME_STRING;
   }
 
-  get currentTimeString() {
-    if (!this.state) {
-      return '--:--';
-    }
-    const position = this.state.position + Date.now() - this.state.timestamp;
-    return msToHHMMSS(position);
-  }
-
-  constructor(private playerSdk: PlayerService, private changeDetector: ChangeDetectorRef) {}
+  constructor(private playerSdk: PlayerService) {}
 
   ngOnInit() {
-    interval(1000).pipe(takeUntil(this.destroyEvent))
-      .subscribe(_ => this.changeDetector.detectChanges());
+    this.startAnimation();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.state) {
-      const prev = changes.state.previousValue as WebPlaybackState;
-      const current = changes.state.currentValue as WebPlaybackState;
-      if (current && !current.paused && (!prev || prev.paused)) {
-        this.lastRequestId = requestAnimationFrame(this.animateBar.bind(this));
-      }
-    }
   }
 
   ngOnDestroy() {
@@ -68,7 +57,6 @@ export class SeekBarComponent implements OnInit, OnDestroy, OnChanges {
       cancelAnimationFrame(this.lastRequestId);
     }
     this.destroyEvent.next();
-    this.destroyEvent.complete();
   }
 
   @HostListener('click', ['$event'])
@@ -80,21 +68,21 @@ export class SeekBarComponent implements OnInit, OnDestroy, OnChanges {
     this.playerSdk.seek(ratio * this.state.duration);
   }
 
-  private setBarProgress(state: WebPlaybackState) {
-    const ratio = Math.min((state.position + Date.now() - state.timestamp) / state.duration, 1);
-    this.progress.nativeElement.style.transform = `scale(${ratio}, 1)`;
+  private startAnimation() {
+    return of(0, animationFrame).pipe(repeat(), takeUntil(this.destroyEvent)).subscribe(() => {
+      if (!this.state) {
+        this.progress.nativeElement.style.transform = `scale(0, 1)`;
+        this.currentTime.nativeElement.textContent = UNKNOWN_TIME_STRING;
+        return;
+      }
+
+      const position = this.state.paused ? this.state.position : this.state.position + Date.now() - this.state.timestamp;
+      const ratio = Math.min(position / this.state.duration, 1);
+      this.currentTime.nativeElement.textContent = msToHHMMSS(position);
+      this.progress.nativeElement.style.transform = `scale(${ratio}, 1)`;
+    });
   }
 
-  private animateBar() {
-    if (!this.state) {
-      return;
-    }
 
-    this.setBarProgress(this.state);
-
-    if (!this.state.paused) {
-      this.lastRequestId = requestAnimationFrame(this.animateBar.bind(this));
-    }
-  }
 
 }
