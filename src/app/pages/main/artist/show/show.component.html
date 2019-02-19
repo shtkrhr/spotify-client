@@ -1,4 +1,5 @@
 <div class="side-nav" *ngIf="data">
+  <div class="side-nav-inner">
   <header class="header">
     <img class="artist-image" *ngIf="data.artist.images[0]" [src]="data.artist.images[0].url">
     <h1>{{data.artist.name}}</h1>
@@ -13,6 +14,7 @@
       <a mat-list-item routerLink="./relation" routerLinkActive="active">Relation</a>
     </mat-nav-list>
   </nav>
+  </div>
 </div>
 <div class="content">
   <router-outlet></router-outlet>

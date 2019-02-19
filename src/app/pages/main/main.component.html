@@ -1,7 +1,6 @@
 <div class="content">
   <router-outlet></router-outlet>
 </div>
-<sp-player (nav)="nav($event)"></sp-player>
 <nav class="side-nav">
   <mat-nav-list>
     <a mat-list-item routerLink="/favorite/artist" routerLinkActive="active">Artist</a>
@@ -18,3 +17,4 @@
     </a>
   </mat-nav-list>
 </nav>
+<sp-player (nav)="nav($event)"></sp-player>

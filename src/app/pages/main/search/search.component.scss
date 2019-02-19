@@ -1,9 +1,19 @@
-$toggle-button-width: 20px;
-$side-nav-width-narrow: $toggle-button-width;
-$side-nav-width-wide: 600px;
+@import "../../../../scss/mixins/index";
+
+$side-nav-width: 420px;
 
 :host {
-  display: block;
+  @include grid($side-nav-width 1fr, 1fr);
+}
+.side-nav {
+  @include grid-item(1, 2, 1, 2);
+}
+.content {
+  @include grid-item(2, 3, 1, 2);
+}
+
+:host {
+  min-height: 100%;
 
   &.navigating {
     .child {
@@ -14,43 +24,17 @@ $side-nav-width-wide: 600px;
 }
 
 .side-nav {
-  position: fixed;
-  top: 0;
-  width: $side-nav-width-narrow;
-  height: 100vh;
   border-right: 1px solid black;
   background: white;
-  transition: all .3s;
-  z-index: 99;
+  @include z-index(nav);
+}
 
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-end;
-
-  &.opened {
-    width: $side-nav-width-wide;
-
-    + .content {
-      padding-left: $side-nav-width-wide;
-    }
-  }
-
-  form {
-    flex: 1;
-  }
-
-  .toggle-button {
-    flex: 0 0 $toggle-button-width;
-    min-width: 0px;
-    padding: 0;
-  }
+.side-nav-inner {
+  position: sticky;
+  top: 0;
 }
 
 .content {
-  padding-left: $side-nav-width-narrow;
-  min-height: 100vh;
-  transition: all .3s;
-  overflow: hidden;
 }
 
 .type-nav {

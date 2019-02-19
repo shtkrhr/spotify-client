@@ -1,3 +1,7 @@
+@import "../../../../../scss/mixins/index";
+
+// @todo: アーティスト名調整
+
 $jacket-width: 50px;
 $gutter: 10px;
 
@@ -35,9 +39,8 @@ $gutter: 10px;
 .name {
   text-decoration: none;
   cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max-width: 100%;
+  @include single-line-clamp();
 
   &:hover {
     text-decoration: underline;

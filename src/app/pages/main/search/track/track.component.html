@@ -1,11 +1,10 @@
-<div *ngIf="tracks?.total">
+<ng-container *ngIf="tracks?.total">
   <p>{{tracks.total > 50 ? '50+' : tracks.total}} tracks</p>
   <sp-track-list
     [tracks]="tracks.items"
     [columns]="['image', 'play', 'name', 'artist', 'album', 'duration']"
   ></sp-track-list>
-
-</div>
+</ng-container>
 
 <div class="message no-result" *ngIf="noResult">
   Fill the Search Params
