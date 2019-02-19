@@ -1,4 +1,4 @@
-<div *ngIf="artists?.total">
+<ng-container *ngIf="artists?.total">
   <p>{{artists.total > 50 ? '50+' : artists.total}} artists</p>
 
   <sp-thumbnail-group gutter="narrow" [maxColumnWidth]="180">
@@ -6,7 +6,7 @@
       <a sp-artist-thumbnail [routerLink]="['/artist', item.id]" [artist]="item"></a>
     </sp-thumbnail>
   </sp-thumbnail-group>
-</div>
+</ng-container>
 
 <div class="message no-result" *ngIf="noResult">
   Fill the Search Params

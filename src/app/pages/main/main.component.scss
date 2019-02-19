@@ -1,40 +1,47 @@
+@import "../../../scss/mixins/index";
+
 $side-nav-width: 160px;
 $player-height: 90px;
 
 :host {
-  display: block;
+  @include grid($side-nav-width 1fr, 1fr $player-height);
+}
+.side-nav {
+  @include grid-item(1, 2, 1, 2);
+}
+.content {
+  @include grid-item(2, 3, 1, 2);
+}
+sp-player {
+  @include grid-item(1, 3, 2, 3);
 }
 
-// @todo: position: stickey
+:host {
+  min-height: 100vh;
+}
+
 .side-nav {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: $side-nav-width;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: calc(100vh - #{$player-height});
   border-right: 1px solid black;
   background: white;
-  z-index: 100;
-  padding-bottom: $player-height;
+  @include z-index(nav);
 }
 
 .content {
-  padding-left: $side-nav-width;
-  padding-bottom: $player-height;
-  min-height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
+  height: calc(100vh - #{$player-height});
 }
 
 sp-player {
-  position: fixed;
+  position: sticky;
   left: 0;
   bottom: 0;
-  width: 100%;
-  height: $player-height;
-  z-index: 110;
+  @include z-index(nav);
 }
 
 [mat-list-item] {

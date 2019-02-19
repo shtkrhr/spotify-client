@@ -1,9 +1,9 @@
-<div *ngIf="playlists?.total">
+<ng-container *ngIf="playlists?.total">
   <p>{{playlists.total > 50 ? '50+' : playlists.total}} playlists</p>
   <p *ngFor="let item of playlists.items">
     <a [routerLink]="['/playlist', item.id]">{{item.name}}</a>
   </p>
-</div>
+</ng-container>
 
 <div class="message no-result" *ngIf="noResult">
   Fill the Search Params

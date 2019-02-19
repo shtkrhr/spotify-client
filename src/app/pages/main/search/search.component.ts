@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchResolvedData } from './search.resolver';
 import { isValidSearchParams } from '../../../core/api/method-params/search';
 import { FormControl } from '@angular/forms';
@@ -18,8 +18,6 @@ export class SearchComponent implements OnInit {
 
   @HostBinding('class.navigating')
   isNavigating = false;
-
-  isSideOpened = false;
 
   data?: SearchResolvedData;
 
@@ -59,7 +57,6 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.data = data.data;
-      this.isSideOpened = !this.data.result;
       this.rangedYear = this.data.params.year && this.data.params.year.start !== this.data.params.year.end;
       this.year = this.rangedYear ? undefined : (this.data.params.year && this.data.params.year.start);
       this.yearStart = this.rangedYear ? this.data.params.year.start : undefined;
@@ -71,7 +68,6 @@ export class SearchComponent implements OnInit {
     if (!this.canSubmit) {
       return;
     }
-    this.isSideOpened = false;
     this.isNavigating = true;
     this.router.navigate(['/search', this.page.pathType], {
       queryParams: {
@@ -149,10 +145,6 @@ export class SearchComponent implements OnInit {
     } else {
       this.data.params.year = isNullOrUndefined(this.year) ? undefined : {start: this.year, end: this.year};
     }
-  }
-
-  toggleSideNav() {
-    this.isSideOpened = !this.isSideOpened;
   }
 
   private filterGenre(genre: string): string[] {

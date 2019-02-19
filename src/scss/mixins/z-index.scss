@@ -1,0 +1,12 @@
+$z-indexes: (
+  nav: 500,
+  overlay: 1000,
+);
+
+@mixin z-index($type, $distance: 0) {
+  @if map-has-key($z-indexes, $type) {
+    z-index: map-get($z-indexes, $type) + $distance;
+  } @else {
+    @error 'Invalid z-index type.';
+  }
+}

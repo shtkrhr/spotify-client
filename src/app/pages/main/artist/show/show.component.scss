@@ -1,20 +1,33 @@
+@import "../../../../../scss/mixins/index";
+
 $side-nav-width: 300px;
 
 :host {
-  display: block;
+  @include grid($side-nav-width 1fr, 1fr);
+}
+.side-nav {
+  @include grid-item(1, 2, 1, 2);
+}
+.content {
+  @include grid-item(2, 3, 1, 2);
+}
+
+:host {
+  min-height: 100%;
 }
 
 .side-nav {
-  position: fixed;
-  top: 0;
-  width: $side-nav-width;
-  height: 100vh;
   border-right: 1px solid black;
   background: white;
+  @include z-index(nav);
+}
+
+.side-nav-inner {
+  position: sticky;
+  top: 0;
 }
 
 .content {
-  padding-left: $side-nav-width;
 }
 
 .artist-image {
